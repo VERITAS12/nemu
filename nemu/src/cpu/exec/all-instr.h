@@ -12,6 +12,7 @@
 
 #include "control-instr/call.h"
 #include "control-instr/je.h"
+#include "control-instr/ret.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
