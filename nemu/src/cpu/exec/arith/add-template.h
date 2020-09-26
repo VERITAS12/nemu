@@ -11,6 +11,7 @@ static void do_execute(){
 	OPERAND_W(op_dest, result);
 	printf("add: --------------\n");
 	printf("val:  %dval2:  %d\n", op_dest->val, op_src->val);
+	printf("CF:  %d\n", cpu.CF);
 	printf("result:      %d\n", result);
 	int i=0,cnt=0;
 	for(;i<8;i++)if(((1<<i)&result)!=0)cnt++;
