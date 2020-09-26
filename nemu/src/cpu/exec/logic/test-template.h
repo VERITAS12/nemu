@@ -12,7 +12,7 @@ static void do_execute(){
 	for(i = 0;i < 8;i++){
 		if(((1<<i)&result)!=0)cnt++;
 	}
-	cpu.PF = cnt % 2 == 0 ? 1 : 0;
+	cpu.PF =!(cnt%2);
 	print_asm(str(instr)" %s, %s", op_src->str, op_dest->str);
 }
 make_instr_helper(i2a)
