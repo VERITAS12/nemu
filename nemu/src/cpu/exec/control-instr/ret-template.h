@@ -6,7 +6,6 @@ make_helper(concat(ret_n_, SUFFIX)){
 	cpu.eip = MEM_R (reg_l(R_ESP));
 	//if(DATA_BYTE == 2)cpu.eip &= 0xffff;
 	reg_l(R_ESP) += DATA_BYTE;
-	printf("%d\n",DATA_BYTE);
 	printf("%x\n", cpu.eip);
 	print_asm("ret");
 	return 1;
