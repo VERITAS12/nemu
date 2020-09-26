@@ -13,7 +13,7 @@ long long ans[] = {0LL};//, 0x1LL, 0x2LL, 0x7fffffffffffffffLL, 0x80000000000000
 int main() {
 	// int i, j, ans_idx = 0;
 	// int loop = 0;
-	nemu_assert(test_data[0]+0==ans [0]);
+	nemu_assert(test_data[0]+ans[0]==ans [0]);
 	// for(i = 0; i < NR_DATA; i ++) {
 	// 	for(j = 0; j < NR_DATA; j ++) {
 	// 		nemu_assert(add(test_data[i], test_data[j]) == ans[ans_idx ++]);
