@@ -3,6 +3,7 @@
 #define instr adc
 static void do_execute(){
 	DATA_TYPE result = op_dest->val + op_src->val  + cpu.ZF;
+	printf("adc:  %d\n", result);
 	int len = (DATA_BYTE<<3)-1;
 	cpu.CF = result < op_dest->val;
 	cpu.SF = result>>len;
