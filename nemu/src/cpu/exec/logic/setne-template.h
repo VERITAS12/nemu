@@ -3,7 +3,8 @@
 #define instr setne
 
 static void do_execute(){
-	OPERAND_W(op_src,0);
+	if(cpu.ZF==0)OPERAND_W(op_src,1);
+	else OPERAND_W(op_src, 0);
 	print_asm(str(instr)" %s", op_src->str);
 }
 make_instr_helper(rm)
