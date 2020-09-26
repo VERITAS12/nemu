@@ -17,6 +17,8 @@
 #include "control-instr/jbe.h"
 #include "control-instr/jle.h"
 #include "control-instr/jg.h"
+#include "control-instr/jne.h"
+
 
 #include "arith/dec.h"
 #include "arith/inc.h"
