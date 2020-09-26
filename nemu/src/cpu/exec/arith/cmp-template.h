@@ -8,6 +8,7 @@ static void do_execute(){
 	int i=0, cnt = 0;
 	for(;i<8;i++)if(((1<<i)&result)!=0)cnt++;
 	cpu.PF = !(cnt%2);
+	cpu.CF = op_dest->val<op_src->val;
 	cpu.ZF = !result;
 	printf("cmp: --------------\n");
 	printf("val:  %dval2:  %d\n", op_dest->val, op_src->val);
