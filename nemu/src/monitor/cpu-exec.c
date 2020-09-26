@@ -62,6 +62,8 @@ void cpu_exec(volatile uint32_t n) {
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
 		printf("%d\n", instr_len);
+		
+		printf("%d\n", cpu.eip);
 		cpu.eip += instr_len;
 
 #ifdef DEBUG
