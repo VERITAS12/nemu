@@ -2,8 +2,7 @@
 
 #define instr mov
 
-static void do_execute() {
-	print_asm_template2();
+static void do_execute() {	
 	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2();
 }

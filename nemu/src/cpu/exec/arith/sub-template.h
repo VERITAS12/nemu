@@ -10,6 +10,7 @@ static void do_execute(){
 	cpu.PF = !(cnt%2);
 	cpu.ZF = !result;
 	cpu.SF = result >> len;
+	OPERAND_W(op_dest, result);
 	cpu.OF = (op_src->val>>len)!=(op_dest->val>>len)&&(cpu.SF==(op_src->val>>len));
 	print_asm(str(instr)" %s, %s", op_src->str, op_dest->str);
 }
