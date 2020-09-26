@@ -14,6 +14,7 @@
 #include "control-instr/je.h"
 #include "control-instr/ret.h"
 #include "control-instr/jmp.h"
+#include "control-instr/jbe.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
