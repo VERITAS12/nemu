@@ -6,9 +6,9 @@ static void do_execute(){
 	DATA_TYPE result = op_dest->val & op_src->val;
 	cpu.CF = 0;
 	cpu.ZF = !result;
-	// printf("test: --------------\n");
-	// printf("val:  %dval2:  %d\n", op_dest->val, op_src->val);
-	// printf("ZF:      %d\n", cpu.ZF);
+	printf("test: --------------\n");
+	printf("val:  %dval2:  %d\n", op_dest->val, op_src->val);
+	printf("ZF:      %d\n", cpu.ZF);
 	cpu.SF = result >> ((DATA_BYTE << 3) - 1);
 	int i;
 	int cnt = 0;
