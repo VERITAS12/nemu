@@ -20,7 +20,7 @@ int main() {
 	d.pad1[0] = 0 + 128;
 	d.pad2[0] = 0;
 	struct dummy t = fun(d);
-	nemu_assert(t.pad1[0] == 0 + 128);
+	nemu_assert(t.pad2[0] == 0);
 	// for(i = 0; i < N; i ++) {
 	// 	nemu_assert(t.pad1[i] == i + 128);
 	// 	nemu_assert(t.pad2[i] == i);
