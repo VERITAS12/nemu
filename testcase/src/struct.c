@@ -4,7 +4,7 @@
 
 struct dummy {
 	int pad1[N];
-	char pad2[N];
+	// char pad2[N];
 } d;
 
 struct dummy fun(struct dummy a) {
