@@ -19,6 +19,7 @@
 #include "control-instr/jg.h"
 #include "control-instr/jne.h"
 #include "control-instr/jl.h"
+#include "control-instr/js.h"
 #include "control-instr/jge.h"
 
 #include "arith/dec.h"
