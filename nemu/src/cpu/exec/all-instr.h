@@ -47,6 +47,7 @@
 
 #include "string/rep.h"
 #include "string/movs.h"
+#include "string/scas.h"
 
 #include "misc/misc.h"
 
