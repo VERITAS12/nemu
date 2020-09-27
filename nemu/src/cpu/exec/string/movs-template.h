@@ -1,6 +1,6 @@
 #include "cpu/exec/template-start.h"
 #define instr movs
-static void do_execute(){
+make_helper(concat(movs_l_, SUFFIX)){
 	if(DATA_BYTE==2){
 		swaddr_write(reg_w(R_DI), 2, swaddr_read(reg_w(R_SI), 4));
 		if(cpu.DF==0){
@@ -21,7 +21,7 @@ static void do_execute(){
 		}
 	}
 	print_asm("movs");
+	return 1;
 }
-make_instr_helper(n)
 
 #include "cpu/exec/template-end.h"
