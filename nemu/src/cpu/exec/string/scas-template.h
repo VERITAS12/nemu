@@ -19,8 +19,7 @@ make_helper(concat(scas_l_, SUFFIX)){
 	int result = val2-val1;
 	cpu.ZF = !result;
 	cpu.SF=result<0;
-	int len = (DATA_BYTE<<3)-1;
-	cpu.OF = ((op_dest->val>>len)==(op_src->val>>len))&&((op_dest->val>>len)!=cpu.SF);
+	cpu.OF= (result>0&&val1>0&&val2<=0)||(result<0&&val1<0&&val2>=0);
 	int i = 0, cnt = 0;
 	for(;i<8;i++)if(((1<<i)&result)!=0)cnt++;
 	cpu.PF = !(cnt%2);
