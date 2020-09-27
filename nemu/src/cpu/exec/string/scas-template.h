@@ -9,11 +9,11 @@ make_helper(concat(scas_l_, SUFFIX)){
 		if(cpu.DF==0)reg_w(R_DI)+=DATA_BYTE;
 		else reg_w(R_DI)-=DATA_BYTE;
 	}else{
-		val1 = swaddr_read(reg_w(R_EDI), 2);
-		val2 = reg_w(R_EAX);
+		val1 = swaddr_read(reg_l(R_EDI), 2);
+		val2 = reg_l(R_EAX);
 		if(DATA_BYTE==1){val1&=0xff;val2&=0xff;}
-		if(cpu.DF==0)reg_w(R_EDI)+=DATA_BYTE;
-		else reg_w(R_EDI)-=DATA_BYTE;
+		if(cpu.DF==0)reg_l(R_EDI)+=DATA_BYTE;
+		else reg_l(R_EDI)-=DATA_BYTE;
 	}
 	print_asm_template2();
 	int result = val2-val1;
