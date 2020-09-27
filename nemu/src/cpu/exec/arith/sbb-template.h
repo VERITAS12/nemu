@@ -4,8 +4,8 @@
 
 static void do_execute(){
 	int val1 = (int)op_src->val;
-	val1 += cpu.CF;
 	int val2 = op_dest->val;
+	val1 = val1 +cpu.CF;
 	int result = val2 - val1;
 	cpu.ZF = !result;
 	cpu.SF = result < 0?1:0;
