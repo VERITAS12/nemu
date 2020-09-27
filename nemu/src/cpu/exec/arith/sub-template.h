@@ -7,6 +7,7 @@ static void do_execute(){
 	int len = (DATA_BYTE << 3) - 1;
 	int i=0, cnt=0;
 	for(;i<8;i++)if(((1<<i)&result)!=0)cnt++;
+	cpu.CF = op_dest->val < op_src->val;
 	cpu.PF = !(cnt%2);
 	cpu.ZF = !result;
 	cpu.SF = result >> len;
