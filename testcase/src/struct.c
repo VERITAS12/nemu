@@ -12,12 +12,13 @@ struct dummy fun(struct dummy a) {
 }
 
 int main() {
-	int i;
-	for(i = 0; i < N; i ++) {
-		d.pad1[i] = i + 128;
-		d.pad2[i] = i;
-	}
-
+	// int i;
+	// for(i = 0; i < N; i ++) {
+	// 	d.pad1[i] = i + 128;
+	// 	d.pad2[i] = i;
+	// }
+	d.pad1[0] = 0 + 128;
+	d.pad2[0] = 0;
 	struct dummy t = fun(d);
 	nemu_assert(t.pad1[0] == 0 + 128);
 	// for(i = 0; i < N; i ++) {
