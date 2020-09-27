@@ -1,7 +1,7 @@
 #include "cpu/exec/template-start.h"
 #define instr movs
 static void do_execute(){
-	if(ops_decoded.is_operand_size_16){
+	if(DATA_BYTE==2){
 		swaddr_write(reg_w(R_DI), 2, swaddr_read(reg_w(R_SI), 4));
 		if(cpu.DF==0){
 			reg_w(R_DI)+=DATA_BYTE;
