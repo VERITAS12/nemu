@@ -8,6 +8,7 @@ static void do_execute () {
 	DATA_TYPE_S tmp = op_dest->val;
 	uint8_t count = src & 0x1f;
 	dest >>= count;
+	tmp = dest;
 	OPERAND_W(op_dest, dest);
 
 	/* TODO: Update EFLAGS. */
