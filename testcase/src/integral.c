@@ -17,10 +17,10 @@
 // 	s = F_mul_F(s, h);
 // 	return s;
 // }
-// FLOAT F_mul_F(FLOAT a, FLOAT b) {
-// 	long long c = (long long)a * (long long)b;
-// 	return (FLOAT)(c >> 16);
-// }
+FLOAT F_mul_F(FLOAT a, FLOAT b) {
+	long long c = (long long)a * (long long)b;
+	return (FLOAT)(c >> 16);
+}
 int main() { 
 	// FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
 	// FLOAT ans = f2F(0.551222);
