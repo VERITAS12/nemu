@@ -5,7 +5,7 @@
 static void do_execute(){
 	DATA_TYPE_S disp = op_src->val;
 	if (op_src->type == OP_TYPE_REG || op_src->type == OP_TYPE_MEM){
-		cpu.eip = disp - concat(decode_rm_, SUFFIX)(cpu.eip + 1);
+		cpu.eip = disp - concat(decode_rm_, SUFFIX)(cpu.eip + 1)-1;
 		print_asm(str(instr)" %s", op_src->str);
 	}else{
 		print_asm("jmp 0x%x", cpu.eip + 1 + DATA_BYTE +disp);
