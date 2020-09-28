@@ -132,6 +132,7 @@ static int cmd_bt(char *args){
 	char str[32];
 	int cnt = 0;
 	while(addr){
+		printf("addr: %d\n", addr);
 		get_src(psf.ret_addr, str);
 		if(args[0]=='\0')break;
 		printf("id: %d0x%x: %s(",cnt++, psf.ret_addr, str);
