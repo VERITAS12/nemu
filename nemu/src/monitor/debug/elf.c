@@ -20,6 +20,15 @@ uint32_t cal_val(char * tokens, bool * success){
 	*success = 0;
 	return 0;
 }
+void get_src(swaddr_t addr, char *args){
+	int i=0;
+	for(;i<nr_symtab_entry;i++){
+		if((symtab[i].st_info&0xf)==STT_FUNC && symtab[i].st_value<=addr&&symtab[i].st_value+symtab[i].st_size>=addr){
+			strcpy(args, strtab+symtab[i].st_name);
+			return;
+		}
+	}
+}
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
 	Assert(argc == 2, "run NEMU with format 'nemu [program]'");

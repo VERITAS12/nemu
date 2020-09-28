@@ -9,7 +9,11 @@
 
 void cpu_exec(uint32_t);
 void display_reg();
-
+typedef struct{
+	swaddr_t prev_ebp;
+	swaddr_t ret_addr;
+	uint32_t args[4];
+}PartOfStackFrame;
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -119,7 +123,33 @@ static int cmd_d(char *args) {
 
 	return 0;
 }
+void get_src(swaddr_t addr, char *args);
 
+static int cmd_bt(char *args){
+	PartOfStackFrame psf;
+	swaddr_t addr = reg_l(R_ESP);
+	psf.ret_addr = cpu.eip;
+	char str[32];
+	int cnt = 0;
+	while(addr){
+		get_src(psf.ret_addr, str);
+		if(args[0]=='\0')break;
+		printf("id: %d0x%x: %s(",cnt++, psf.ret_addr, str);
+		int i=0;
+		for(;i<4;i++){
+			psf.args[i]=swaddr_read(addr+8+4*i, 4);
+			printf("%d", psf.args[i]);
+			printf("%c", i==3?')':',');
+			if(i==3)printf("%c", ')');
+			else printf("%c", ',');
+		}
+		printf("\n");
+		psf.ret_addr=swaddr_read(addr+4, 4);
+		psf.prev_ebp=swaddr_read(addr, 4);
+		addr=psf.prev_ebp;
+	}
+	return 0;
+}
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
@@ -146,7 +176,8 @@ static struct {
 	{ "x", "Examine memory", cmd_x },
         { "p", "Evaluate the value of expression", cmd_p },
 	{ "w", "Set watchpoint", cmd_w },
-	{ "d", "Delete watchpoint", cmd_d }
+	{ "d", "Delete watchpoint", cmd_d },
+	{"bt", "print bt", cmd_bt}
 
 };
 
