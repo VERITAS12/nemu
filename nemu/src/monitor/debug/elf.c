@@ -28,6 +28,8 @@ void get_src(swaddr_t addr, char *args){
 			return;
 		}
 	}
+	args[0]='\0';
+	return;
 }
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
