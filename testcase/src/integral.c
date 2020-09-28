@@ -17,15 +17,17 @@
 // 	s = F_mul_F(s, h);
 // 	return s;
 // }
-// FLOAT F_mul_F(FLOAT a, FLOAT b) {
-// 	long long c = (long long)a * (long long)b;
-// 	return (FLOAT)(c >> 16);
-// }
+FLOAT F_mul_F(FLOAT a, FLOAT b) {
+	long long c = (long long)a * (long long)b;
+	return (FLOAT)(c >> 16);
+}
 int main() { 
 	// FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
 	// FLOAT ans = f2F(0.551222);
 
 	// nemu_assert(Fabs(a - ans) < f2F(1e-4));
+	
+
 	// nemu_assert(0x00008000 == f2F(0.5));
 	// nemu_assert(Fabs(11 - 10)< 2);
 	// nemu_assert(f2F(0.001)<f2F(0.1));
