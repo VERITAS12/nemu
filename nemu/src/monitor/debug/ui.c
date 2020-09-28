@@ -137,6 +137,7 @@ static int cmd_bt(char *args){
 		if(args[0]=='\0')break;
 		printf("id: %d0x%x: %s(",cnt++, psf.ret_addr, str);
 		int i=0;
+		printf("ok\n");
 		for(;i<4;i++){
 			psf.args[i]=swaddr_read(addr+8+4*i, 4);
 			printf("%d", psf.args[i]);
