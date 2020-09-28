@@ -64,13 +64,12 @@ FLOAT f2F(float a) {
 	int tmp = *(int *)&a;
 	int sign = (tmp>>31);
 	int exp = ((tmp>>23)&0xff);
-	FLOAT result = tmp;
-	result &= 0x7fffff;
+	FLOAT result = tmp & 0x7fffff;
 	if(exp==0)return 0;
 	result |= (1 << 23);
-	exp -= 150;
-	if(exp>-16)result<<=exp+16;
-	else if(exp < -16)result >>= -16 - exp;
+	exp -= 134;
+	if(exp>0)result<<=exp;
+	else if(exp < 0)result >>=- exp;
 	return sign?-result:result;
 }
 
