@@ -3,7 +3,7 @@
 #define N 100
 
 struct dummy {
-	int pad1[N];
+	int pad1;
 	// char pad2[N];
 } d;
 
@@ -17,10 +17,10 @@ int main() {
 	// 	d.pad1[i] = i + 128;
 	// 	d.pad2[i] = i;
 	// }
-	d.pad1[0] = 128;
+	d.pad1 = 128;
 	// d.pad2[0] = 0;
 	struct dummy t = fun(d);
-	nemu_assert(t.pad1[0] == 128);
+	nemu_assert(t.pad1 == 128);
 	// for(i = 0; i < N; i ++) {
 	// 	nemu_assert(t.pad1[i] == i + 128);
 	// 	nemu_assert(t.pad2[i] == i);
