@@ -17,7 +17,10 @@
 // 	s = F_mul_F(s, h);
 // 	return s;
 // }
-
+FLOAT F_mul_F(FLOAT a, FLOAT b) {
+	long long c = (long long)a * (long long)b;
+	return (FLOAT)(c >> 16);
+}
 int main() { 
 	// FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
 	// FLOAT ans = f2F(0.551222);
@@ -30,8 +33,8 @@ int main() {
 	// nemu_assert(Fabs(F_mul_F(0.2, 0.2))<0x00008000);
 	// nemu_assert(0x00010000==f2F(1));
 	// nemu_assert(Fabs(F_mul_int(0x00010000, 1) - 0x00010000)<0x00000800);
-	nemu_assert(F_mul_F(f2F(1), f2F(1))==f2F(1));
-	// nemu_assert(F_mul_F(0x00010000, 0x00010000)==0x00010000);
+	// nemu_assert(F_mul_F(f2F(1), f2F(1))==f2F(1));
+	nemu_assert((((long long)0x10000 * (long long)0x10000)>>16)==0x00010000);
 	// nemu_assert(Fabs(F_mul_F(0x00010000, 0x00010000) - 0x00010000)<0x00000800);
 	// nemu_assert(Fabs(F_mul_F(f2F(1), f2F(1)) - f2F(1))<0x00000800);
 	// nemu_assert(Fabs(F_mul_F(f2F(0.2), f2F(0.2)) - f2F(0.04))<0x00000800);
