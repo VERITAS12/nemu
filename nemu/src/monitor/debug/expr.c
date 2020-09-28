@@ -286,7 +286,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NEQ, NUMBER, HEXNUMBER, REGISTER, AND, OR, POINTER, NEG
+	NOTYPE = 256, EQ, NEQ, NUMBER, HEXNUMBER, REGISTER, AND, OR, POINTER, NEG, VALUE
 
 	/* TODO: Add more token types */
 
@@ -306,6 +306,7 @@ static struct rule {
 	{"	+", NOTYPE, 0},
 	{"\\b[0-9]+\\b", NUMBER, 0},
 	{"\\b0[xX][0-9a-fA-F]+\\b", HEXNUMBER, 0},
+	{"\\b[a-zA-Z_0-9]+", VALUE, 0},
 	{"\\$[a-zA-Z]+", REGISTER, 0},
 	{"\\+", '+', 4},					// plus
 	{"==", EQ, 3},						// equal
@@ -445,6 +446,7 @@ int dominant_operator(int l, int r){
 	}
 	return op;
 }
+uint32_t cal_val(char * tokens, bool * success);
 uint32_t eval(int l, int r){
 	if(r < l){
 		printf("Something terriable has happened(r < l), please check!\n");
@@ -463,6 +465,12 @@ uint32_t eval(int l, int r){
 				for(i = R_AL; i <= R_BH; i++)
 					if(strcmp(tokens[l].str, regsb[i]) == 0)num = reg_b(i), flag = true;
 				if(!flag)printf("The REGISTER doesn't exist\n");
+				break;
+			}
+			case VALUE:{
+				bool flag;
+				num = cal_val(tokens[l].str, &flag);
+				if(!flag)num = -1;
 				break;
 			}
 			default: printf("eval defalut output!!!\n");

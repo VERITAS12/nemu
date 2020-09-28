@@ -7,7 +7,19 @@ char *exec_file = NULL;
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
-
+uint32_t cal_val(char * tokens, bool * success){
+	*success = 1;
+	int i=0;
+	for(;i<nr_symtab_entry;i++){
+		if((symtab[i].st_info&0xf)==STT_OBJECT){
+			char str[30];
+			strcpy(str, strtab+symtab[i].st_name);
+			if(strcmp(str, tokens)==0)return symtab[i].st_value;
+		}
+	}
+	*success = 0;
+	return 0;
+}
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
 	Assert(argc == 2, "run NEMU with format 'nemu [program]'");
