@@ -1,10 +1,10 @@
 #include "trap.h"
 #include "FLOAT.h"
 
-FLOAT f(FLOAT x) { 
-	/* f(x) = 1/(1+25x^2) */
-	return F_div_F(int2F(1), int2F(1) + F_mul_int(F_mul_F(x, x), 25));
-}
+// FLOAT f(FLOAT x) { 
+// 	/* f(x) = 1/(1+25x^2) */
+// 	return F_div_F(int2F(1), int2F(1) + F_mul_int(F_mul_F(x, x), 25));
+// }
 
 // FLOAT computeT(int n, FLOAT a, FLOAT b, FLOAT (*fun)(FLOAT)) {
 // 	int k;
@@ -29,8 +29,8 @@ int main() {
 	// nemu_assert(Fabs(f(0)- f2F(1))<f2F(0.1));
 	// nemu_assert(Fabs(F_mul_F(0.2, 0.2))<0x00008000);
 	// nemu_assert(0x00010000==f2F(1));
-	nemu_assert(Fabs(F_mul_int(0x00010000, 1) - 0x00010000)<0x00000800);
-	// nemu_assert(Fabs(F_mul_F(0x00010000, 0x00010000) - 0x00010000)<0x00000800);
+	// nemu_assert(Fabs(F_mul_int(0x00010000, 1) - 0x00010000)<0x00000800);
+	nemu_assert(Fabs(F_mul_F(0x00010000, 0x00010000) - 0x00010000)<0x00000800);
 	// nemu_assert(Fabs(F_mul_F(f2F(1), f2F(1)) - f2F(1))<0x00000800);
 	// nemu_assert(Fabs(F_mul_F(f2F(0.2), f2F(0.2)) - f2F(0.04))<0x00000800);
 	// nemu_assert(Fabs(F_mul_int(F_mul_F(0.2, 0.2), 25) - f2F(1))<0x00008000);
