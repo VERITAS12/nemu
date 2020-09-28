@@ -28,7 +28,8 @@ int main() {
 	// nemu_assert(f2F(0.001)<f2F(0.1));
 	// nemu_assert(Fabs(f(0)- f2F(1))<f2F(0.1));
 	// nemu_assert(Fabs(F_mul_F(0.2, 0.2))<0x00008000);
-	nemu_assert(Fabs(F_mul_F(f2F(0.2), f2F(0.2)) - f2F(0.04))<0x00000800);
+	nemu_assert(Fabs(F_mul_F(f2F(1), f2F(1)) - f2F(1))<0x00000800);
+	// nemu_assert(Fabs(F_mul_F(f2F(0.2), f2F(0.2)) - f2F(0.04))<0x00000800);
 	// nemu_assert(Fabs(F_mul_int(F_mul_F(0.2, 0.2), 25) - f2F(1))<0x00008000);
 	// nemu_assert(Fabs(f(0.2))<0x0000f000);
 	// nemu_assert(Fabs(f(0.2))<f2F(0.6));
