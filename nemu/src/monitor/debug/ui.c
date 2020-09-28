@@ -132,14 +132,11 @@ static int cmd_bt(char *args){
 	char str[32];
 	int cnt = 0;
 	while(addr){
-		printf("addr: %d\n", addr);
 		get_src(psf.ret_addr, str);
 		if(str[0]=='\0')break;
 		printf("id: %d0x%x: ",cnt++, psf.ret_addr);
-		printf("ok1\n");
 		printf("%s (", str);
 		int i=0;
-		printf("ok2\n");
 		for(;i<4;i++){
 			psf.args[i]=swaddr_read(addr+8+4*i, 4);
 			printf("%d", psf.args[i]);
