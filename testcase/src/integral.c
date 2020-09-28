@@ -4,10 +4,10 @@
 // 	long long c = (long long)a * (long long)b;
 // 	return (FLOAT)(c >> 16);
 // }
-// FLOAT f(FLOAT x) { 
-// 	/* f(x) = 1/(1+25x^2) */
-// 	return F_div_F(int2F(1), int2F(1) + F_mul_int(F_mul_F(x, x), 25));
-// }
+FLOAT f(FLOAT x) { 
+	/* f(x) = 1/(1+25x^2) */
+	return F_div_F(int2F(1), int2F(1) + F_mul_int(F_mul_F(x, x), 25));
+}
 
 FLOAT computeT(int n, FLOAT a, FLOAT b, FLOAT (*fun)(FLOAT)) {
 	int k;
@@ -22,10 +22,10 @@ FLOAT computeT(int n, FLOAT a, FLOAT b, FLOAT (*fun)(FLOAT)) {
 }
 
 int main() { 
-	// FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
-	// FLOAT ans = f2F(0.551222);
+	FLOAT a = computeT(10, f2F(-1.0), f2F(1.0), f);
+	FLOAT ans = f2F(0.551222);
 
-	// nemu_assert(Fabs(a - ans) < f2F(1e-4));
+	nemu_assert(Fabs(a - ans) < f2F(1e-4));
 	
 
 	// nemu_assert(0x00008000 == f2F(0.5));
@@ -37,7 +37,7 @@ int main() {
 	// nemu_assert(Fabs(F_mul_int(0x00010000, 1) - 0x00010000)<0x00000800);
 	// nemu_assert(F_mul_F(f2F(1), f2F(1))==f2F(1));
 	// nemu_assert((((long long)0x10000 * (long long)0x10000)>>16)==0x00010000);
-	nemu_assert((((long long)0x10000 * (long long)0x10000)>>16)==F_mul_F(0x00010000, 0x00010000));
+	// nemu_assert((((long long)0x10000 * (long long)0x10000)>>16)==F_mul_F(0x00010000, 0x00010000));
 
 	// nemu_assert(Fabs(F_mul_F(0x00010000, 0x00010000) - 0x00010000)<0x00000800);
 	// nemu_assert(Fabs(F_mul_F(f2F(1), f2F(1)) - f2F(1))<0x00000800);
