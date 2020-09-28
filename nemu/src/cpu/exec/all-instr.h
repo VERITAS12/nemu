@@ -21,6 +21,7 @@
 #include "control-instr/jl.h"
 #include "control-instr/js.h"
 #include "control-instr/ja.h"
+#include "control-instr/jae.h"
 #include "control-instr/jns.h"
 #include "control-instr/jge.h"
 
