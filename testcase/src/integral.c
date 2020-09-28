@@ -2,8 +2,8 @@
 #include "FLOAT.h"
 
 FLOAT f(FLOAT x) { 
-	/* f(x) = 1/(1+25x^2) */
-	return F_div_F(int2F(1), int2F(1) + F_mul_int(F_mul_F(x, x), 25));
+	/* f(x) = 1/(1+25x^2) *///F_mul_int(F_mul_F(x, x), 25)
+	return F_div_F(int2F(1), int2F(1) + int2F(0));
 }
 
 FLOAT computeT(int n, FLOAT a, FLOAT b, FLOAT (*fun)(FLOAT)) {
