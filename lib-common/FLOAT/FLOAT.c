@@ -3,7 +3,7 @@
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	// nemu_assert(0);
 	long long result = 1ll * a * b;
-	return result>16;
+	return result>>16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
