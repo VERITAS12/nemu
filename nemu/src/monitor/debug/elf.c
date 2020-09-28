@@ -21,6 +21,7 @@ uint32_t cal_val(char * tokens, bool * success){
 	return 0;
 }
 void get_src(swaddr_t addr, char *args){
+	printf("here\n");
 	int i=0;
 	for(;i<nr_symtab_entry;i++){
 		if((symtab[i].st_info&0xf)==STT_FUNC && symtab[i].st_value<=addr&&symtab[i].st_value+symtab[i].st_size>=addr){
