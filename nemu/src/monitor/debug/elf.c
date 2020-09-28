@@ -25,7 +25,6 @@ void get_src(swaddr_t addr, char *args){
 	for(;i<nr_symtab_entry;i++){
 		if((symtab[i].st_info&0xf)==STT_FUNC && symtab[i].st_value<=addr&&symtab[i].st_value+symtab[i].st_size>=addr){
 			strcpy(args, strtab+symtab[i].st_name);
-			printf("out\n");
 			return;
 		}
 	}
