@@ -27,7 +27,7 @@ int main() {
 	// nemu_assert(Fabs(11 - 10)< 2);
 	// nemu_assert(f2F(0.001)<f2F(0.1));
 	// nemu_assert(Fabs(f(0)- f2F(1))<f2F(0.1));
-	nemu_assert(Fabs(f(0.2)- f2F(0.5))<f2F(0.5));
+	nemu_assert(Fabs(f(0.2)- f2F(0.5))<f2F(5));
 	// nemu_assert(Fabs(F_mul_int(f(0.2), 1) - f2F(0.5))<f2F(0.1));
 	return 0;
 }
