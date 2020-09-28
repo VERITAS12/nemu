@@ -23,7 +23,7 @@ int main() {
 	// FLOAT ans = f2F(0.551222);
 
 	// nemu_assert(Fabs(a - ans) < f2F(1e-4));
-	// nemu_assert(0x00008000 == f2F(0.5)); F_mul_int(f(0.04), 1)
-	nemu_assert(0x00008000 == f2F(0.5));
+	// nemu_assert(0x00008000 == f2F(0.5));
+	nemu_assert(Fabs(F_mul_int(f(0.04), 1) - f2F(0.5))<f2F(0.0001));
 	return 0;
 }
