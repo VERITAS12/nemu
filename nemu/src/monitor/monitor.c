@@ -86,7 +86,9 @@ void restart() {
 
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
-	printf("START: %0x\n", cpu.eip);
+	//printf("START: %0x\n", cpu.eip);
+	cpu.CF = 1;
+	cpu.PF = cpu.ZF = cpu.SF=cpu.IF=cpu.DF=cpu.OF=0;
 	/* Initialize DRAM. */
 	init_ddr3();
 }
