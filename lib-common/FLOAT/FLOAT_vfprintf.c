@@ -15,8 +15,8 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 *         0x00013333    "1.199996"
 	 */
 
-	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	// char buf[80];
+	// int len = sprintf(buf, "0x%08x", f);
 	return __stdio_fwrite(buf, len, stream);
 }
 
