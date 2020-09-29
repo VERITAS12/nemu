@@ -12,6 +12,7 @@ static void do_execute () {
 
 	/* TODO: Update EFLAGS. */
 	// panic("please implement me");
+	cpu.ZF = !dest;
 	print_asm_template2();
 }
 
