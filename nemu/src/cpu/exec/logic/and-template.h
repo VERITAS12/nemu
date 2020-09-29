@@ -8,7 +8,7 @@ static void do_execute () {
 
 	/* TODO: Update EFLAGS. */
 //	panic("please implement me");
-	// cpu.CF = 0;
+	cpu.CF = 0;
 	cpu.ZF = !result;
 	cpu.OF = 0;
 	cpu.SF = result>>((DATA_BYTE<<3)-1);
