@@ -18,8 +18,10 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	char buf[80];
 	int sign = f & (1<<32);
 	if(sign) f = (~f) + 1;
-	int tmp = 0;
-	int len = sprintf(buf, "0x%08x", f);
+	int f_end = f &0x0000ffff;
+	int len;
+	if(sign)len = (sprintf)(buf, "-%d.%06d", ((int)(f)>>16), f_end);
+	else len = (sprintf)(buf, "%d.%06d", ((int)(f)>>16), f_end);
 	return __stdio_fwrite(buf, len, stream);
 }
 
