@@ -43,7 +43,7 @@ static void modify_vfprintf() {
 	*(tonop + 2) = 0x9090;
 	int *pos = (int *)(addr + 0x1);
 	*pos += (int)format_FLOAT - (int)(&_fpmaxtostr);
-	printf("a\n");
+	// printf("a\n");
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;
