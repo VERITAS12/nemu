@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "FLOAT.h"
+#include <sys/mman.h>
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
@@ -14,14 +15,14 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 *         0x00010000    "1.000000"
 	 *         0x00013333    "1.199996"
 	 */
-
 	char buf[80];
-	int sign = f & (1<<32);
+	int sign = f & (1<<31);
 	if(sign) f = (~f) + 1;
 	int f_end = f &0x0000ffff;
+	int res = (1LL*1000000LL*f_end)>>16;
 	int len;
-	if(sign)len = (sprintf)(buf, "-%d.%06d", ((int)(f)>>16), f_end);
-	else len = (sprintf)(buf, "%d.%06d", ((int)(f)>>16), f_end);
+	if(sign)len = (sprintf)(buf, "-%d.%06d", ((int)(f)>>16), res);
+	else len = (sprintf)(buf, "%d.%06d", ((int)(f)>>16), res);
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -31,15 +32,17 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
-	int addr = &_vfprintf_internal;
-	char *p = (char*)(addr + 0x306);
-	char *sub = p - 0xa;
 
-
-
-	int *pos = (int *)(addr + 0x306 + 0x1);
+	int addr = &_vfprintf_internal + 0x306;
+	mprotect((void *)((addr - 0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
+	int * fstpt2push = (int*)(addr - 0xb);
+	*fstpt2push = 0x9032ff08;
+	short * tonop = (short*)(addr - 34);
+	*tonop = 0x9090;
+	*(tonop + 2) = 0x9090;
+	int *pos = (int *)(addr + 0x1);
 	*pos += (int)format_FLOAT - (int)(&_fpmaxtostr);
-	
+	printf("a\n");
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;
