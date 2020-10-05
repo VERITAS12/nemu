@@ -5,6 +5,7 @@
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
+extern char &_ppfs_setargs;
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
 
 __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
@@ -34,7 +35,7 @@ static void modify_vfprintf() {
 	 */
 
 	int addr = &_vfprintf_internal + 0x306;
-	mprotect((void *)((addr - 0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
+	// mprotect((void *)((addr - 0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
 	int * fstpt2push = (int*)(addr - 0xb);
 	*fstpt2push = 0x9032ff08;
 	short * tonop = (short*)(addr - 34);
@@ -88,7 +89,7 @@ static void modify_ppfs_setargs() {
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
 	 */
-
+	// protect((void *)((addr - 0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
 #if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */
