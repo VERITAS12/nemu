@@ -12,7 +12,7 @@ make_helper(concat(cwtl_, SUFFIX)) {
 #if DATA_BYTE == 2
 	reg_w(R_AX) = (int8_t)reg_b(R_AL);
 #else
-	reg_l(R_EAX) = (int16_t)reg_w(R_AX);
+	reg_l(R_EAX) = (int16_t)reg_w(R_AL);
 #endif
 
 	print_asm("cwtl" str(SUFFIX));

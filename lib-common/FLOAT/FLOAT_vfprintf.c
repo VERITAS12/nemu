@@ -31,7 +31,15 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
+	int addr = &_vfprintf_internal;
+	char *p = (char*)(addr + 0x306);
+	char *sub = p - 0xa;
 
+
+
+	int *pos = (int *)(addr + 0x306 + 0x1);
+	*pos += (int)format_FLOAT - (int)(&_fpmaxtostr);
+	
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;
@@ -88,7 +96,7 @@ static void modify_ppfs_setargs() {
 		PA_POINTER,                   /* void * */
 		PA_FLOAT,                     /* float */
 		PA_DOUBLE,                    /* double */
-		__PA_NOARG,                   /* non-glibc -- signals non-arg width or prec */
+		__PA_NOARG,                  /* non-glibc -- signals non-arg width or prec */
 		PA_LAST
 	};
 
