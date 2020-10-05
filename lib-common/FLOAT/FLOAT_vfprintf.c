@@ -89,7 +89,11 @@ static void modify_ppfs_setargs() {
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
 	 */
-	// protect((void *)((addr - 0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
+	int addr = &_ppfs_setargs
+	// protect((void *)((addr + 0x73-0x64) & 0xfffff000), 4096 * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
+	int * lea2jmp = (int *)(addr + 0x71);
+	*lea2jmp &= 0x11000000;
+	*lea2jmp |= 0x009030eb;
 #if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */
