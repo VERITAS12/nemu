@@ -125,7 +125,7 @@ static bool make_token(char *e) {
 	}
 	//printf("%s\n", tokens[0].str);
 	for(i = 0; i < nr_token; i++){
-		if(i == 0 || (tokens[i - 1].type != NUMBER && tokens[i - 1].type != HEXNUMBER && tokens[i - 1].type != ')' && tokens[i - 1].type != REGISTER)){
+		if(i == 0 || (tokens[i - 1].type != NUMBER && tokens[i - 1].type != HEXNUMBER && tokens[i - 1].type != ')' && tokens[i - 1].type != REGISTER&& tokens[i - 1].type != VALUE)){
 			if(tokens[i].type == '-'){printf("neg\n");tokens[i].type = NEG;tokens[i].priority = 6;}
 			else if(tokens[i].type == '*'){tokens[i].type = POINTER;tokens[i].priority = 6;}
 		}
@@ -155,7 +155,7 @@ int dominant_operator(int l, int r){
 	printf("min: %d\n", min_t);
 	if(min_t == 6)for(i = l;i <= r;i++)if(min_t == tokens[i].priority)return i;
 	for(i = l;i <= r;i++){
-		if(tokens[i].type == NUMBER || tokens[i].type == HEXNUMBER || tokens[i].type == REGISTER)continue;
+		if(tokens[i].type == NUMBER || tokens[i].type == HEXNUMBER || tokens[i].type == REGISTER || tokens[i].type == VALUE)continue;
 		int cnt = 0;
 		bool flag = true;
 		for(j = i + 1;j <= r;j++)
