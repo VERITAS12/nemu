@@ -57,7 +57,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 
 	int a;
 	srand((unsigned)time(NULL));
-	a = rand()%8;
+	a = rand() % NR_ROW;
 	L2_read_64(addr, L1[group].row[a].blocks);
 	L1[group].row[a].valid = 1;
 	L1[group].row[a].tag = tag;
