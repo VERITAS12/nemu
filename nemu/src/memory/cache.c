@@ -52,7 +52,8 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int i;
 	for(i = 0;i < 1; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
-		printf("hit: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
+		printf("hit! group: %d, row: %d\n", group, i);
+		//printf("hit! tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
 		int b=0;
 	
 		for(;b<64;b++){
@@ -71,7 +72,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	L1[group].row[a].valid = 1;
 	L1[group].row[a].tag = tag;
 	//if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
-	printf("bad\n");
+	printf("bad group: %d, row: %d\n", group, a);
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
 	int b=0;
 	for(;b<64;b++){
