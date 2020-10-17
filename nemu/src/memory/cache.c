@@ -52,7 +52,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int i;
 	
 	for(i = 0;i < NR_ROW; i++){
-		
+		printf("ttt tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
 		printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
 		flag = true;
