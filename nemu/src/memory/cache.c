@@ -42,7 +42,6 @@ void init_cache1(){
 }
 
 static void cache1_read(hwaddr_t addr, void *data){
-	//printf("1\n");
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache1_read)", addr);
 	cache_addr temp;
 	temp.addr = addr & ~BURST_MASK;
@@ -52,34 +51,17 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int i;
 	for(i = 0;i < 1; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
-		printf("hit! group: %d, row: %d\n", group, i);
-		//printf("hit! tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
-		int b=0;
-	
-		for(;b<64;b++){
-			printf("%d ", L1[group].row[i].blocks[b]);
-		}
-		printf("\n");
 		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
-		//printf("hit off: %d %d\n",off, *(L1[group].row[i].blocks+off));
 		return;
 	}
 
 	int a;
 	srand((unsigned)time(NULL));
-	a = 0;
+	a = rand()%8;
 	dram_read_64(addr, L1[group].row[a].blocks);
 	L1[group].row[a].valid = 1;
 	L1[group].row[a].tag = tag;
-	//if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
-	printf("bad group: %d, row: %d\n", group, a);
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-	int b=0;
-	for(;b<64;b++){
-		printf("%d ", L1[group].row[a].blocks[b]);
-	}
-	printf("\n");
-	//L1[group].row[a].valid = 0;
 
 }
 uint32_t L1_read(hwaddr_t addr, size_t len){
@@ -94,9 +76,38 @@ uint32_t L1_read(hwaddr_t addr, size_t len){
 
 
 
+static void cache1_write(hwaddr_t addr, void *data, uint8_t *mask){
+	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache1_read)", addr);
+	cache_addr temp;
+	temp.addr = addr & ~BURST_MASK;
+	uint32_t tag = temp.tag;
+	uint32_t group = temp.group;
+	uint32_t off = temp.off;
+	int i;
+	for(i = 0;i < 1; i++){
+		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
+		memcpy_with_mask(L1[group].row[i].blocks+off, data, BURST_LEN, mask);
+		return;
+	}
 
+}
 
+void L1_write(hwaddr_t addr, size_t len, uint32_t data) {
+	uint32_t offset = addr & BURST_MASK;
+	uint8_t temp[2 * BURST_LEN];
+	uint8_t mask[2 * BURST_LEN];
+	memset(mask, 0, 2 * BURST_LEN);
 
+	*(uint32_t *)(temp + offset) = data;
+	memset(mask + offset, 1, len);
+
+	cache1_write(addr, temp, mask);
+
+	if(offset + len > BURST_LEN) {
+		/* data cross the burst boundary */
+		cache1_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
+	}
+}
 
 
 
