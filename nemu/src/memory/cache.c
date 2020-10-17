@@ -64,7 +64,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	dram_read_64(addr, L1[group].row[a].blocks);
 	L1[group].row[a].valid = 0;
 	L1[group].row[a].tag = tag;
-	if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
+	//if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
 	int b=0;
 	for(;b<64;b++){
