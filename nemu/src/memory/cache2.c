@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdio.h>
 uint32_t dram_read_64(hwaddr_t, void *);
-void dram_write(hwaddr_t, size_t, uint32_t);
+void dram_write_64(hwaddr_t, void *);
 
 #define GROUP_WIDTH 12
 #define BLOCK_WIDTH 6
@@ -38,43 +38,11 @@ void init_cache2(){
 	for(i = 0; i < NR_GROUP;i++){
 		for(j = 0; j < NR_ROW;i++){
 			L2[i].row[j].valid = 0;	
+			L2[i].row[j].dirty = 0;
 		}
 	}
 }
-/*
-static void cache2_read(hwaddr_t addr, void *data){
-	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache2_read)", addr);
-	cache_addr temp;
-	temp.addr = addr & ~BURST_MASK;
-	uint32_t tag = temp.tag;
-	uint32_t group = temp.group;
-	uint32_t off = temp.off;
-	int i;
-	for(i = 0;i < NR_ROW; i++){
-		if(L2[group].row[i].tag != tag || L2[group].row[i].valid != 1)continue;
-		memcpy(data, L2[group].row[i].blocks+off, BURST_LEN);
-		return;
-	}
 
-	int a;
-	srand((unsigned)time(NULL));
-	a = rand()%8;
-	dram_read_64(addr, L2[group].row[a].blocks);
-	L2[group].row[a].valid = 1;
-	L2[group].row[a].tag = tag;
-	memcpy(data, L2[group].row[a].blocks+off, BURST_LEN);
-
-}
-
-uint32_t L2_read(hwaddr_t addr, size_t len){
-	uint32_t offset = addr & BURST_MASK;
-	uint8_t temp[2 * BURST_LEN];
-	cache2_read(addr, temp);
-	if(offset + len > BURST_LEN){
-		cache2_read(addr + BURST_LEN, temp + BURST_LEN);
-	}
-	return unalign_rw(temp + offset, 4);
-}*/
 void L2_read_64(hwaddr_t addr, void *data){
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache2_read)", addr);
 	cache_addr temp;
@@ -91,10 +59,13 @@ void L2_read_64(hwaddr_t addr, void *data){
 	int a;
 	srand((unsigned)time(NULL));
 	a = rand()%NR_ROW;
+	if(L2[group].row[a].dirty)
+		dram_write_64((L2[group].row[a].tag << 13) | (group << 6), L2[group].row[a].blocks);
 	dram_read_64(addr, L2[group].row[a].blocks);
 	L2[group].row[a].valid = 1;
 	L2[group].row[a].dirty = 0;
 	L2[group].row[a].tag = tag;
+	
 	memcpy(data, L2[group].row[a].blocks, CACHE_LEN);
 
 }
@@ -112,9 +83,20 @@ static void cache2_write(hwaddr_t addr, void *data, uint8_t *mask){
 	for(i = 0;i < NR_ROW; i++){
 		if(L2[group].row[i].tag != tag || L2[group].row[i].valid != 2)continue;
 		memcpy_with_mask(L2[group].row[i].blocks+off, data, BURST_LEN, mask);
+		L2[group].row[i].valid = 1;
+		L2[group].row[i].dirty = 1;
+		L2[group].row[i].tag = tag;
 		return;
 	}
+	int a;
+	srand((unsigned)time(NULL));
+	a = rand()%NR_ROW;
+	dram_read_64(addr, L2[group].row[a].blocks);
+	L2[group].row[a].valid = 1;
+	L2[group].row[a].dirty = 1;
 
+	L2[group].row[a].tag = tag;
+	memcpy_with_mask(L2[group].row[i].blocks+off, data, BURST_LEN, mask);
 }
 
 void L2_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -132,7 +114,6 @@ void L2_write(hwaddr_t addr, size_t len, uint32_t data) {
 		/* data cross the burst boundary */
 		cache2_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
 	}
-	dram_write(addr, len, data);
 }
 
 

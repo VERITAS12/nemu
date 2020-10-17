@@ -87,9 +87,11 @@ static void cache1_write(hwaddr_t addr, void *data, uint8_t *mask){
 	for(i = 0;i < NR_ROW; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
 		memcpy_with_mask(L1[group].row[i].blocks+off, data, BURST_LEN, mask);
+		L1[group].row[i].valid = 1;
+		L1[group].row[i].tag = tag;
 		return;
 	}
-
+	
 }
 
 void L1_write(hwaddr_t addr, size_t len, uint32_t data) {
