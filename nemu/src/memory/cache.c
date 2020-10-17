@@ -49,27 +49,24 @@ static void cache1_read(hwaddr_t addr, void *data){
 	uint32_t tag = temp.tag;
 	uint32_t group = temp.group;
 	uint32_t off = temp.off;
-	bool flag = false;
 	int i;
-	
 	for(i = 0;i < NR_ROW; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
 		//printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
-		flag = true;
 		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
+		return;
 	}
-	
-	if(!flag){
-		int a;
-		srand((unsigned)time(NULL));
-		a = rand() % 8;
-		dram_read_64(addr, L1[group].row[a].blocks);
-		L1[group].row[a].valid = 1;
-		L1[group].row[a].tag = tag;
-		if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
-		memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-		//L1[group].row[a].valid = 0;
-	}
+
+	int a;
+	srand((unsigned)time(NULL));
+	a = rand() % 8;
+	dram_read_64(addr, L1[group].row[a].blocks);
+	L1[group].row[a].valid = 1;
+	L1[group].row[a].tag = tag;
+	if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
+	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
+	//L1[group].row[a].valid = 0;
+
 }
 uint32_t L1_read(hwaddr_t addr, size_t len){
 	uint32_t offset = addr & BURST_MASK;
