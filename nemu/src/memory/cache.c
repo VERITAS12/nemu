@@ -50,7 +50,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	uint32_t group = temp.group;
 	uint32_t off = temp.off;
 	int i;
-	for(i = 0;i < NR_ROW; i++){
+	for(i = 0;i < 1; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
 		printf("hit: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
 		int b=0;
@@ -77,7 +77,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	for(;b<64;b++){
 		printf("%d ", L1[group].row[a].blocks[b]);
 	}
-	
+	printf("\n");
 	//L1[group].row[a].valid = 0;
 
 }
