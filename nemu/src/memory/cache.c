@@ -52,9 +52,15 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int i;
 	for(i = 0;i < NR_ROW; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
-		//printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
+		printf("hit: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
+		int b=0;
+	
+		for(;b<64;b++){
+			printf("%d ", L1[group].row[i].blocks[b]);
+		}
+		printf("\n");
 		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
-		printf("hit off: %d %d\n",off, *(L1[group].row[i].blocks+off));
+		//printf("hit off: %d %d\n",off, *(L1[group].row[i].blocks+off));
 		return;
 	}
 
@@ -62,15 +68,16 @@ static void cache1_read(hwaddr_t addr, void *data){
 	srand((unsigned)time(NULL));
 	a = 0;
 	dram_read_64(addr, L1[group].row[a].blocks);
-	L1[group].row[a].valid = 0;
+	L1[group].row[a].valid = 1;
 	L1[group].row[a].tag = tag;
 	//if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
+	printf("bad\n");
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
 	int b=0;
 	for(;b<64;b++){
 		printf("%d ", L1[group].row[a].blocks[b]);
 	}
-	printf("\n");
+	
 	//L1[group].row[a].valid = 0;
 
 }
