@@ -42,7 +42,7 @@ void init_cache1(){
 }
 
 static void cache1_read(hwaddr_t addr, void *data){
-	printf("1\n");
+	//printf("1\n");
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache1_read)", addr);
 	cache_addr temp;
 	temp.addr = addr & ~BURST_MASK;
@@ -52,9 +52,9 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int i;
 	for(i = 0;i < NR_ROW; i++){
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
-		printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
+		//printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
 		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
-		printf("hit %d\n", *(L1[group].row[i].blocks+off));
+		//printf("hit %d\n", *(L1[group].row[i].blocks+off));
 		return;
 	}
 
@@ -66,7 +66,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	L1[group].row[a].tag = tag;
 	if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-	printf("true :%d\n", *(L1[group].row[a].blocks+off));
+	printf("NO hit :%d\n", *(L1[group].row[a].blocks+off));
 	//L1[group].row[a].valid = 0;
 
 }
