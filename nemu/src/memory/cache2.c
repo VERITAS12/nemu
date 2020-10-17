@@ -36,7 +36,7 @@ L L2[NR_GROUP];
 void init_cache2(){
 	int i, j;
 	for(i = 0; i < NR_GROUP;i++){
-		for(j = 0; j < NR_ROW;i++){
+		for(j = 0; j < NR_ROW;j++){
 			L2[i].row[j].valid = 0;	
 			L2[i].row[j].dirty = 0;
 		}

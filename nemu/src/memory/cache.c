@@ -35,7 +35,7 @@ L L1[NR_GROUP];
 void init_cache1(){
 	int i, j;
 	for(i = 0; i < NR_GROUP;i++){
-		for(j = 0; j < NR_ROW;i++){
+		for(j = 0; j < NR_ROW;j++){
 			L1[i].row[j].valid = 0;	
 		}
 	}
