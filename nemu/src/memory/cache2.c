@@ -25,8 +25,9 @@ typedef union {
 #define NR_BLOCK (1 << BLOCK_WIDTH)
 typedef struct cache{
 	struct{
-		uint32_t valid : 3;
-		uint32_t tag : 14;
+		uint32_t valid : 1;
+		uint32_t dirty : 1;
+		uint32_t tag : TAG_WIDTH;
 		uint8_t blocks[NR_BLOCK];
 	}row[NR_ROW];
 }L;
@@ -40,7 +41,7 @@ void init_cache2(){
 		}
 	}
 }
-
+/*
 static void cache2_read(hwaddr_t addr, void *data){
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache2_read)", addr);
 	cache_addr temp;
@@ -64,6 +65,7 @@ static void cache2_read(hwaddr_t addr, void *data){
 	memcpy(data, L2[group].row[a].blocks+off, BURST_LEN);
 
 }
+
 uint32_t L2_read(hwaddr_t addr, size_t len){
 	uint32_t offset = addr & BURST_MASK;
 	uint8_t temp[2 * BURST_LEN];
@@ -72,6 +74,29 @@ uint32_t L2_read(hwaddr_t addr, size_t len){
 		cache2_read(addr + BURST_LEN, temp + BURST_LEN);
 	}
 	return unalign_rw(temp + offset, 4);
+}*/
+void L2_read_64(hwaddr_t addr, void *data){
+	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache2_read)", addr);
+	cache_addr temp;
+	temp.addr = addr & ~BURST_MASK;
+	uint32_t tag = temp.tag;
+	uint32_t group = temp.group;
+	int i;
+	for(i = 0;i < NR_ROW; i++){
+		if(L2[group].row[i].tag != tag || L2[group].row[i].valid != 1)continue;
+		memcpy(data, L2[group].row[i].blocks, CACHE_LEN);
+		return;
+	}
+
+	int a;
+	srand((unsigned)time(NULL));
+	a = rand()%NR_ROW;
+	dram_read_64(addr, L2[group].row[a].blocks);
+	L2[group].row[a].valid = 1;
+	L2[group].row[a].dirty = 0;
+	L2[group].row[a].tag = tag;
+	memcpy(data, L2[group].row[a].blocks, CACHE_LEN);
+
 }
 
 

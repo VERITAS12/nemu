@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
-uint32_t dram_read_64(hwaddr_t, void *);
-void dram_write(hwaddr_t, size_t, uint32_t);
+uint32_t L2_read_64(hwaddr_t, void *);
+void L2_write(hwaddr_t, size_t, uint32_t);
 
 #define GROUP_WIDTH 7
 #define BLOCK_WIDTH 6
@@ -26,7 +26,7 @@ typedef union {
 typedef struct cache{
 	struct{
 		uint32_t valid : 1;
-		uint32_t tag : 14;
+		uint32_t tag : TAG_WIDTH;
 		uint8_t blocks[NR_BLOCK];
 	}row[NR_ROW];
 }L;
@@ -58,7 +58,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	int a;
 	srand((unsigned)time(NULL));
 	a = rand()%8;
-	dram_read_64(addr, L1[group].row[a].blocks);
+	L2_read_64(addr, L1[group].row[a].blocks);
 	L1[group].row[a].valid = 1;
 	L1[group].row[a].tag = tag;
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
@@ -107,7 +107,7 @@ void L1_write(hwaddr_t addr, size_t len, uint32_t data) {
 		/* data cross the burst boundary */
 		cache1_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
 	}
-	dram_write(addr, len, data);
+	L2_write(addr, len, data);
 }
 
 
