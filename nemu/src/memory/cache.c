@@ -68,7 +68,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 		L1[group].row[a].tag = tag;
 		if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
 		memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-		L1[group].row[a].valid = 0;
+		//L1[group].row[a].valid = 0;
 	}
 }
 uint32_t L1_read(hwaddr_t addr, size_t len){
