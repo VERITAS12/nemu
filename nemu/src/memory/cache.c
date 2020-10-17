@@ -49,13 +49,13 @@ static void cache1_read(hwaddr_t addr, void *data){
 	uint32_t group = temp.group;
 	uint32_t off = temp.off;
 	bool flag = false;
-	int i;
-	for(i = 0;i < NR_ROW; i++){
+	//int i;
+	//for(i = 0;i < NR_ROW; i++){
 		//printf("tag: 0x%x, valid: 0x%x\n", L1[group].row[i].tag, L1[group].row[i].valid);
-		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
-		flag = true;
-		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
-	}
+		//if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
+		//flag = true;
+		//memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
+	//}
 	
 	if(!flag){
 		int a;
@@ -66,7 +66,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 		L1[group].row[a].tag = tag;
 		if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
 		memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-L1[group].row[a].valid = 0;
+		L1[group].row[a].valid = 0;
 	}
 }
 uint32_t L1_read(hwaddr_t addr, size_t len){
