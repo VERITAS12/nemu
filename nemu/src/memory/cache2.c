@@ -91,6 +91,8 @@ static void cache2_write(hwaddr_t addr, void *data, uint8_t *mask){
 	int a;
 	srand((unsigned)time(NULL));
 	a = rand()%NR_ROW;
+	if(L2[group].row[a].dirty)
+		dram_write_64((L2[group].row[a].tag << 18) | (group << 6), L2[group].row[a].blocks);
 	dram_read_64(addr, L2[group].row[a].blocks);
 	L2[group].row[a].valid = 1;
 	L2[group].row[a].dirty = 1;
