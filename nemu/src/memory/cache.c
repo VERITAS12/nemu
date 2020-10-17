@@ -66,7 +66,11 @@ static void cache1_read(hwaddr_t addr, void *data){
 	L1[group].row[a].tag = tag;
 	if(L1[group].row[a].tag != tag || L1[group].row[a].valid != 1)return;
 	memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
-	printf("NO hit :%d\n", *(L1[group].row[a].blocks+off));
+	int b=0;
+	for(;b<64;b++){
+		printf("NO hit :%d ", L1[group].row[a].blocks[b]);
+	}
+	printf("\n");
 	//L1[group].row[a].valid = 0;
 
 }
