@@ -96,9 +96,8 @@ static void cache2_write(hwaddr_t addr, void *data, uint8_t *mask){
 	dram_read_64(addr, L2[group].row[a].blocks);
 	L2[group].row[a].valid = 1;
 	L2[group].row[a].dirty = 1;
-
 	L2[group].row[a].tag = tag;
-	memcpy_with_mask(L2[group].row[i].blocks+off, data, BURST_LEN, mask);
+	memcpy_with_mask(L2[group].row[a].blocks+off, data, BURST_LEN, mask);
 }
 
 void L2_write(hwaddr_t addr, size_t len, uint32_t data) {
