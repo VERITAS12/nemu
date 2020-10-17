@@ -61,7 +61,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 		srand((unsigned)time(NULL));
 		a = rand() % 8;
 		dram_read_64(addr, L1[group].row[a].blocks);
-		L1[group].row[a].valid = 1;
+		//L1[group].row[a].valid = 1;
 		L1[group].row[a].tag = tag;
 		memcpy(data, L1[group].row[a].blocks+off, BURST_LEN);
 	}
