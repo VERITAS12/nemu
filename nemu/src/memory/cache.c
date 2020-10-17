@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdio.h>
 uint32_t dram_read_64(hwaddr_t, void *);
-
+void dram_write(hwaddr_t, size_t, uint32_t);
 
 #define GROUP_WIDTH 7
 #define BLOCK_WIDTH 6
@@ -107,6 +107,7 @@ void L1_write(hwaddr_t addr, size_t len, uint32_t data) {
 		/* data cross the burst boundary */
 		cache1_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
 	}
+	dram_write(addr, len, data);
 }
 
 
