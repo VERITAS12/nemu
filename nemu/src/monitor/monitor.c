@@ -94,6 +94,6 @@ void restart() {
 	// cpu.PF = cpu.ZF = cpu.SF=cpu.IF=cpu.DF=cpu.OF=0;
 	/* Initialize DRAM. */
 	init_ddr3();
-	init_cache1();
-	init_cache2();
+	//init_cache1();
+	//init_cache2();
 }
