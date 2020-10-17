@@ -51,6 +51,7 @@ static void cache1_read(hwaddr_t addr, void *data){
 	bool flag = false;
 	int i;
 	for(i = 0;i < NR_ROW; i++){
+		printf("tag: 0x%x, valid: 0x%x", L1[group].row[i].tag, L1[group].row[i].valid);
 		if(L1[group].row[i].tag != tag || L1[group].row[i].valid != 1)continue;
 		flag = true;
 		memcpy(data, L1[group].row[i].blocks+off, BURST_LEN);
