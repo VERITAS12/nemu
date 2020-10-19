@@ -30,11 +30,32 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 
 #if DATA_BYTE == 4
 make_helper(mov_cr2r){
-	//swaddr_t addr = instr_fetch(eip + 1, 4);
-	//printf("0x%x\n", addr);
-	//OPERAND_W(op_dest, cpu.CR0.val);
-	//print_asm("mov_cr_r2 %s, %s", op_src->str,op_dest->str);
-	return 3;
-} 
+	uint8_t opcode = instr_fetch(eip + 1, 1);
+	if(opcode == 0xc0){
+		cpu.eax = cpu.CR0.val;
+		print_asm("mov_r2cr %%CR0, %%%s", REG_NAME(R_EAX));
+	}else if(opcode == 0xd8){
+		cpu.eax = cpu.CR3.val;
+		print_asm("mov_r2cr %%CR3, %%%s", REG_NAME(R_EAX));
+		
+	}
+
+	return 2;
+}
+
+make_helper(mov_r2cr){
+	uint8_t opcode = instr_fetch(eip + 1, 1);
+	if(opcode == 0xc0){
+		cpu.CR0.val = cpu.eax;
+		print_asm("mov_r2cr %%%s, %%CR0", REG_NAME(R_EAX));
+	}else if(opcode == 0xd8){
+		cpu.CR3.val = cpu.eax;
+		print_asm("mov_r2cr %%%s, %%CR3", REG_NAME(R_EAX));
+		
+	}
+
+	return 2;
+}
+
 #endif
 #include "cpu/exec/template-end.h"

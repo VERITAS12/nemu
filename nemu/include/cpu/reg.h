@@ -53,6 +53,7 @@ typedef struct {
 		};
 	};
 	CR0 CR0;
+	CR3 CR3;
 	XS CS, DS, SS, ES;
 	GDTR GDTR;
 } CPU_state;
