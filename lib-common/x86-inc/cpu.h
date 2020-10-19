@@ -2,7 +2,7 @@
 #define __X86_INC_CPU_H__
 
 /* the Control Register 0 */
-typedef union CR0 {
+typedef union{
 	struct {
 		uint32_t protect_enable      : 1;
 		uint32_t monitor_coprocessor : 1;
@@ -21,7 +21,8 @@ typedef union CR0 {
 	};
 	uint32_t val;
 } CR0;
-CR0.val = 0;
+CR0 t;
+t.val = 0;
 /* the Control Register 3 (physical address of page directory) */
 typedef union CR3 {
 	struct {
