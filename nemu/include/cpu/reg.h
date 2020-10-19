@@ -52,7 +52,7 @@ typedef struct {
 	};
 		};
 	};
-
+	CR0 CR0;
 
 } CPU_state;
 
