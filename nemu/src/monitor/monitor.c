@@ -90,10 +90,12 @@ void restart() {
 	cpu.eip = ENTRY_START;
 	//printf("START: %0x\n", cpu.eip);
 	cpu.eflags = 0x00000002;
+	cpu.CR0.val = 0x00000000;
 	// cpu.CF = 1;
 	// cpu.PF = cpu.ZF = cpu.SF=cpu.IF=cpu.DF=cpu.OF=0;
 	/* Initialize DRAM. */
 	init_ddr3();
 	init_cache1();
 	init_cache2();
+	
 }
