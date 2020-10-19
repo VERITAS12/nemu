@@ -30,6 +30,8 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 
 #if DATA_BYTE == 4
 make_helper(mov_cr2r){
+	swaddr_t addr = instr_fetch(eip + 1, 4);
+	printf("0x%x\n", addr);
 	OPERAND_W(op_dest, cpu.CR0.val);
 	print_asm("mov_cr_r2 %s, %s", op_src->str,op_dest->str);
 	return 2;
