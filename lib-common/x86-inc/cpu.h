@@ -21,7 +21,8 @@ typedef union CR0 {
 	};
 	uint32_t val;
 } CR0;
-
+CR0 t;
+t.val = 0;
 /* the Control Register 3 (physical address of page directory) */
 typedef union CR3 {
 	struct {
