@@ -33,5 +33,17 @@ typedef union CR3 {
 	};
 	uint32_t val;
 } CR3;
-
+typedef struct GDTR{
+	uint32_t base;
+	uint16_t limit;
+} GDTR;
+/* the segment register*/
+typedef union XS{
+	struct {
+		uint16_t prl : 2;
+		uint16_t ti : 1;
+		uint16_t index : 13; 
+	};
+	uint16_t val;
+}XS;
 #endif
