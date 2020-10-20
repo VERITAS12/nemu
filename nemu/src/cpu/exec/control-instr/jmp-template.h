@@ -21,6 +21,7 @@ make_helper(ljmp){
 	uint16_t opcode2 = instr_fetch(eip + 5, 2);
 	cpu.eip = opcode1;
 	cpu.SR[R_CS].val = opcode2;
+	load_sr_cache(R_CS);
 	print_asm("ljmp %x, 0x%x", opcode2, opcode1 + 7);
 	return 7;
 }

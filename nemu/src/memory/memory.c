@@ -3,6 +3,7 @@
 
 uint32_t L1_read(hwaddr_t, size_t);
 void L1_write(hwaddr_t, size_t, uint32_t);
+
 uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	if(cpu.CR0.protect_enable){
 		assert(len <= cpu.SR_cache[sreg].limit);
@@ -11,6 +12,7 @@ uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	return addr;
 }
 /* Memory accessing interfaces */
+
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	return L1_read(addr, len) & (~0u >> ((4 - len) << 3));
@@ -50,4 +52,12 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg) {
 	lnaddr_t lnaddr = seg_translate(addr, len, sreg);
 	lnaddr_write(lnaddr, len, data);
 }
-
+void load_sr_cache(uint8_t sreg){
+	uint32_t addr = (cpu.SR[sreg].index << 3) + cpu.GDTR.base;
+	SegDesc sd;
+	sd.high = lnaddr_read(addr, 4);
+	sd.low = lnaddr_read(addr + 4, 4);
+	cpu.SR_cache[sreg].base = (sd.base_31_24<<24)|(sd.base_23_16<<16)|(sd.base_15_0);
+	cpu.SR_cache[sreg].limit = ((sd.limit_19_16 << 16)|sd.limit_15_0);
+	//if(sd.granularity)cpu.SR_cache[sreg].limit <<= 12;
+}
