@@ -60,5 +60,5 @@ void load_sr_cache(uint8_t sreg){
 	cpu.SR_cache[sreg].base = (sd.base_31_24<<24)|(sd.base_23_16<<16)|(sd.base_15_0);
 	//printf("0x%x\n", addr);
 	cpu.SR_cache[sreg].limit = ((sd.limit_19_16 << 16)|sd.limit_15_0);
-	//if(sd.granularity)cpu.SR_cache[sreg].limit <<= 12;
+	if(sd.granularity)cpu.SR_cache[sreg].limit <<= 12;
 }
