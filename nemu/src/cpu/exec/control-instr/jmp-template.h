@@ -22,7 +22,7 @@ make_helper(ljmp){
 	cpu.eip = opcode1;
 	cpu.SR[R_CS].val = opcode2;
 	load_sr_cache(R_CS);
-	printf("0x%x\n", cpu.SR_cache[R_CS].base);
+	
 	print_asm("ljmp %x, 0x%x", opcode2, opcode1 + 7);
 	return 7;
 }
