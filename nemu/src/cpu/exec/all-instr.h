@@ -24,6 +24,7 @@
 #include "control-instr/jae.h"
 #include "control-instr/jns.h"
 #include "control-instr/jge.h"
+#include "control-instr/lgdt.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"

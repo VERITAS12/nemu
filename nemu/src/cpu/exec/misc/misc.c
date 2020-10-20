@@ -23,11 +23,4 @@ make_helper(lea) {
 	print_asm("leal %s,%%%s", op_src->str, regsl[m.reg]);
 	return 1 + len;
 }
-make_helper(lgdt) {
-	decode_i_l(eip + 1);
-	cpu.GDTR.base = op_src->val;
-	decode_i_w(eip + 5);
-	cpu.GDTR.limit = op_src->val;
-	print_asm("lgdt 0x%x,0x%x", cpu.GDTR.base, cpu.GDTR.limit);
-	return 7;
-}
+

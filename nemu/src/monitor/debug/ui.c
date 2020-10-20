@@ -77,7 +77,7 @@ static int cmd_x(char *args) {
 					printf("0x%08x: ", addr);
 				}
 
-				printf("0x%08x ", swaddr_read(addr, 4));
+				printf("0x%08x ", swaddr_read(addr, 4, R_DS));
 				addr += 4;
 				if(i % 4 == 3) {
 					printf("\n");
@@ -138,15 +138,15 @@ static int cmd_bt(char *args){
 		printf("%s (", str);
 		int i=0;
 		for(;i<4;i++){
-			psf.args[i]=swaddr_read(addr+8+4*i, 4);
+			psf.args[i]=swaddr_read(addr+8+4*i, 4, R_SS);
 			printf("%d", psf.args[i]);
 			printf("%c", i==3?')':',');
 			if(i==3)printf("%c", ')');
 			else printf("%c", ',');
 		}
 		printf("\n");
-		psf.ret_addr=swaddr_read(addr+4, 4);
-		psf.prev_ebp=swaddr_read(addr, 4);
+		psf.ret_addr=swaddr_read(addr+4, 4, R_SS);
+		psf.prev_ebp=swaddr_read(addr, 4, R_SS);
 		addr=psf.prev_ebp;
 	}
 	return 0;

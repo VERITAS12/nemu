@@ -205,7 +205,7 @@ uint32_t eval(int l, int r){
 		if(tokens[op].type == POINTER||tokens[op].type == NEG || tokens[op].type == '!'){
 			uint32_t val = eval(op + 1, r);
 			switch(tokens[op].type){
-				case POINTER: return swaddr_read(val, 4);
+				case POINTER: return swaddr_read(val, 4, R_DS);
 				case NEG: return -val;
 				case '!': return !val;
 				default : printf("point neg default\n");

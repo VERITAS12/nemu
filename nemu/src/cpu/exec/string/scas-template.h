@@ -4,12 +4,12 @@
 make_helper(concat(scas_l_, SUFFIX)){
 	int val1, val2;
 	if(DATA_BYTE == 2){
-		val1 = swaddr_read(reg_w(R_DI), 2);
+		val1 = swaddr_read(reg_w(R_DI), 2, R_ES);
 		val2 = reg_w(R_AX);
 		if(cpu.DF==0)reg_w(R_DI)+=DATA_BYTE;
 		else reg_w(R_DI)-=DATA_BYTE;
 	}else{
-		val1 = swaddr_read(reg_l(R_EDI), 4);
+		val1 = swaddr_read(reg_l(R_EDI), 4, R_ES);
 		val2 = reg_l(R_EAX);
 		if(DATA_BYTE==1){val1&=0xff;val2&=0xff;}
 		if(cpu.DF==0)reg_l(R_EDI)+=DATA_BYTE;

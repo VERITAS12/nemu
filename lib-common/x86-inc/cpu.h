@@ -37,6 +37,7 @@ typedef struct GDTR{
 	uint32_t base;
 	uint16_t limit;
 } GDTR;
+
 /* the segment register*/
 typedef union XS{
 	struct {
