@@ -57,7 +57,7 @@ typedef struct {
 	CR0 CR0;
 	CR3 CR3;
 	XS SR[6];
-	GDTR SR_cache[6];
+	GDC SR_cache[6];
 	GDTR GDTR;
 } CPU_state;
 

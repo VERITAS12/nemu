@@ -6,7 +6,7 @@ void L1_write(hwaddr_t, size_t, uint32_t);
 
 uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	if(cpu.CR0.protect_enable){
-		assert(addr <= cpu.SR_cache[sreg].limit);
+		assert(addr < cpu.SR_cache[sreg].limit);
 		return cpu.SR_cache[sreg].base + addr;
 	}
 	return addr;
