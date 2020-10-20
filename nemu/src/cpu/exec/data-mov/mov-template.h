@@ -33,10 +33,10 @@ make_helper(mov_cr2r){
 	uint8_t opcode = instr_fetch(eip + 1, 1);
 	if(opcode == 0xc0){
 		cpu.eax = cpu.CR0.val;
-		print_asm("mov_r2cr %%CR0, %%%s", REG_NAME(R_EAX));
+		print_asm("mov_cr2r %%CR0, %%%s", REG_NAME(R_EAX));
 	}else if(opcode == 0xd8){
 		cpu.eax = cpu.CR3.val;
-		print_asm("mov_r2cr %%CR3, %%%s", REG_NAME(R_EAX));
+		print_asm("mov_cr2r %%CR3, %%%s", REG_NAME(R_EAX));
 		
 	}
 
