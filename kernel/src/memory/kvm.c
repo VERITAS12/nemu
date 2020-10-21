@@ -61,9 +61,10 @@ void init_page(void) {
 	write_cr3(cr3.val);
 
 	/* set PG bit in CR0 to enable paging */
-	set_bp();
+	
 	cr0.val = read_cr0();
 	cr0.paging = 1;
+	set_bp();
 	write_cr0(cr0.val);
 	set_bp();
 }

@@ -15,7 +15,9 @@ read_cr0() {
 /* write CR0 */
 static inline void
 write_cr0(uint32_t cr0) {
+	set_bp();
 	asm volatile("movl %0, %%cr0" : : "r"(cr0));
+	set_bp();
 }
 
 /* write CR3, notice that CR3 is never read */
