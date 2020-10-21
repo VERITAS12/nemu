@@ -48,7 +48,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	
 	assert(len == 1 || len == 2 || len == 4);
 	hwaddr_t hwaddr = page_translate(addr);
-	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr & 0xfff) + len < (1<<12));
+	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr>>22) + len < (1<<12));
 	return hwaddr_read(hwaddr, len);
 }
 
@@ -56,7 +56,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	// this is a special case, you can handle it later
 	assert(len == 1 || len == 2 || len == 4);
 	hwaddr_t hwaddr = page_translate(addr);
-	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr & 0xfff) + len < (1<<12));
+	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr >> 22) + len < (1<<12));
 	hwaddr_write(hwaddr, len, data);
 }
 
