@@ -36,7 +36,7 @@ uint32_t page_translate(hwaddr_t addr){
 		uint32_t base2 = (pte.page_frame << 12) + (paddr.page << 2);
 		PTE pte2;
 		pte2.val = hwaddr_read(base2, 4);
-assert(pte2.present);
+		assert(pte2.present);
 		assert(paddr.offset + 4 < (1<<13));
 		return (pte2.page_frame << 12) + paddr.offset;
 	}
