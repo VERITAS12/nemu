@@ -37,7 +37,6 @@ uint32_t page_translate(hwaddr_t addr){
 		PTE pte2;
 		pte2.val = hwaddr_read(base2, 4);
 		assert(pte2.present);
-		assert(paddr.offset + 4 < (1<<13));
 		return (pte2.page_frame << 12) + paddr.offset;
 	}
 	return addr;
@@ -46,8 +45,10 @@ uint32_t page_translate(hwaddr_t addr){
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	// this is a special case, you can handle it later
+	
 	assert(len == 1 || len == 2 || len == 4);
 	hwaddr_t hwaddr = page_translate(addr);
+	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr & 0xfff) + len < (1<<12));
 	return hwaddr_read(hwaddr, len);
 }
 
@@ -55,6 +56,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	// this is a special case, you can handle it later
 	assert(len == 1 || len == 2 || len == 4);
 	hwaddr_t hwaddr = page_translate(addr);
+	if(cpu.CR0.protect_enable && cpu.CR0.paging)assert((hwaddr & 0xfff) + len < (1<<12));
 	hwaddr_write(hwaddr, len, data);
 }
 
