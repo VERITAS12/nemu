@@ -22,12 +22,12 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	L1_write(addr, len, data);	
 }
 uint32_t page_translate(hwaddr_t addr){
-	printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
+	//printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
 	
 	if(cpu.CR0.protect_enable && cpu.CR0.paging){
 		pageaddr_t paddr;
 		paddr.val = addr;
-		printf("get me\n");
+		//printf("get me\n");
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
 		pte.val = hwaddr_read(base1, 4);
