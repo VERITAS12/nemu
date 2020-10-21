@@ -11,13 +11,6 @@ uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	}
 	return addr;
 }
-uint32_t page_translate(hwaddr_t addr){
-	printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
-	if(cpu.CR0.protect_enable && cpu.CR0.paging){
-		printf("get me\n");
-	}
-	return addr;
-}
 /* Memory accessing interfaces */
 
 
@@ -28,6 +21,25 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	L1_write(addr, len, data);	
 }
+uint32_t page_translate(hwaddr_t addr){
+	printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
+	
+	if(cpu.CR0.protect_enable && cpu.CR0.paging){
+		pageaddr_t paddr;
+		paddr.val = addr;
+		printf("get me\n");
+		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
+		PTE pte;
+		pte.val = hwaddr_read(base1, 4);
+		uint32_t base2 = (pte.page_frame << 12) + (paddr.page << 2);
+		PTE pte2;
+		pte2.val = hwaddr_read(base2, 4);
+		assert(paddr.offset + 4 < (1<<11));
+		return (pte2.page_frame << 12) + paddr.offset;
+	}
+	return addr;
+}
+
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	// this is a special case, you can handle it later
