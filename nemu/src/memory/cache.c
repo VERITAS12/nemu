@@ -42,7 +42,7 @@ void init_cache1(){
 }
 
 static void cache1_read(hwaddr_t addr, void *data){
-	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!(cache1_read)", addr);
+	Assert(addr < (1<<27), "physical address %x is outside of the physical memory!(cache1_read)", addr);
 	cache_addr temp;
 	temp.addr = addr & ~BURST_MASK;
 	uint32_t tag = temp.tag;
