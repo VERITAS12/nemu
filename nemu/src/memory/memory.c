@@ -6,7 +6,7 @@ void L1_write(hwaddr_t, size_t, uint32_t);
 
 uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	if(cpu.CR0.protect_enable){
-		printf("get me\n");
+		//printf("get me\n");
 		assert(addr <= cpu.SR_cache[sreg].limit);
 		return cpu.SR_cache[sreg].base + addr;
 	}
@@ -28,6 +28,7 @@ uint32_t page_translate(hwaddr_t addr){
 	if(cpu.CR0.protect_enable && cpu.CR0.paging){
 		pageaddr_t paddr;
 		paddr.val = addr;
+		printf("get me\n");
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
 		pte.val = hwaddr_read(base1, 4);
