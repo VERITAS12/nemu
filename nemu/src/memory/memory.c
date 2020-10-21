@@ -12,6 +12,7 @@ uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	return addr;
 }
 uint32_t page_translate(hwaddr_t addr){
+	printf("get me 1 \n");
 	if(cpu.CR0.protect_enable && cpu.CR0.paging){
 		printf("get me\n");
 	}
