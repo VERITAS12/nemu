@@ -99,5 +99,6 @@ void restart() {
 	init_cache2();
 	cpu.SR_cache[R_CS].base = 0;
 	cpu.SR_cache[R_CS].limit = 0xffffffff;
-	
+
+		
 }
