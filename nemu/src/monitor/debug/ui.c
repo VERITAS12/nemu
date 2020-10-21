@@ -161,7 +161,35 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+static int cmd_page(char *args){
+	char *arg = strtok(NULL, " ");
+	int n;
+	swaddr_t addr;
+	int i;
+	if(arg != NULL) {
+		sscanf(arg, "%d", &n);
 
+		bool success;
+		addr = expr(arg + strlen(arg) + 1, &success);
+		if(success) { 
+			for(i = 0; i < n; i ++) {
+				if(i % 4 == 0) {
+					printf("0x%08x: ", addr);
+				}
+
+				printf("0x%08x ", swaddr_read(addr, 4, R_DS));
+				addr += 4;
+				if(i % 4 == 3) {
+					printf("\n");
+				}
+			}
+			printf("\n");
+		}
+		else { printf("Bad expression\n"); }
+
+	}
+	return 0;
+}
 
 
 static struct {
@@ -180,7 +208,8 @@ static struct {
         { "p", "Evaluate the value of expression", cmd_p },
 	{ "w", "Set watchpoint", cmd_w },
 	{ "d", "Delete watchpoint", cmd_d },
-	{"bt", "print bt", cmd_bt}
+	{"bt", "print bt", cmd_bt},
+	{"page", "page", cmd_page},
 
 };
 
