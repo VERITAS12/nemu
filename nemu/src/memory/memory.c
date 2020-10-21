@@ -11,6 +11,12 @@ uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	}
 	return addr;
 }
+uint32_t page_translate(hwaddr_t addr){
+	if(cpu.CR0.protect_enable && cpu.CR0.paging){
+		
+	}
+	return addr;
+}
 /* Memory accessing interfaces */
 
 
@@ -23,11 +29,15 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
-	return hwaddr_read(addr, len);
+	// this is a special case, you can handle it later
+	hwaddr_t hwaddr = page_translate(addr);
+	return hwaddr_read(hwaddr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	hwaddr_write(addr, len, data);
+	// this is a special case, you can handle it later
+	hwaddr_t hwaddr = page_translate(addr);
+	hwaddr_write(hwaddr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
