@@ -22,7 +22,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	L1_write(addr, len, data);	
 }
 uint32_t page_translate(hwaddr_t addr){
-	//printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
+	printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
 	
 	if(cpu.CR0.protect_enable && cpu.CR0.paging){
 		pageaddr_t paddr;
