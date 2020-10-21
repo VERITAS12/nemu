@@ -32,9 +32,11 @@ uint32_t page_translate(hwaddr_t addr){
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
 		pte.val = hwaddr_read(base1, 4);
+		assert(pte.present);
 		uint32_t base2 = (pte.page_frame << 12) + (paddr.page << 2);
 		PTE pte2;
 		pte2.val = hwaddr_read(base2, 4);
+assert(pte2.present);
 		assert(paddr.offset + 4 < (1<<13));
 		return (pte2.page_frame << 12) + paddr.offset;
 	}
@@ -52,8 +54,8 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	// this is a special case, you can handle it later
 	assert(len == 1 || len == 2 || len == 4);
-	//hwaddr_t hwaddr = page_translate(addr);
-	hwaddr_write(addr, len, data);
+	hwaddr_t hwaddr = page_translate(addr);
+	hwaddr_write(hwaddr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
