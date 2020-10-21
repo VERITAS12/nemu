@@ -163,30 +163,24 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_page(char *args){
 	char *arg = strtok(NULL, " ");
-	int n;
 	swaddr_t addr;
-	int i;
 	if(arg != NULL) {
-		sscanf(arg, "%d", &n);
-
-		bool success;
-		addr = expr(arg + strlen(arg) + 1, &success);
-		if(success) { 
-			for(i = 0; i < n; i ++) {
-				if(i % 4 == 0) {
-					printf("0x%08x: ", addr);
-				}
-
-				printf("0x%08x ", swaddr_read(addr, 4, R_DS));
-				addr += 4;
-				if(i % 4 == 3) {
-					printf("\n");
-				}
-			}
-			printf("\n");
-		}
-		else { printf("Bad expression\n"); }
-
+		bool flag;
+		addr = expr(arg, &flag);
+		if(!flag) {printf("Bad expression\n");return 0;}
+		flag = (cpu.CR0.protect_enable && cpu.CR0.paging);
+		if(!flag) {printf("Bad mode\n"); return 0;}
+		pageaddr_t paddr;
+		paddr.val = addr;
+		//printf("get me\n");
+		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
+		PTE pte;
+		pte.val = hwaddr_read(base1, 4);
+		uint32_t base2 = (pte.page_frame << 12) + (paddr.page << 2);
+		PTE pte2;
+		pte2.val = hwaddr_read(base2, 4);
+		flag = pte2.present && pte.present;
+		if(!flag){printf("Invalid Page\n");}
 	}
 	return 0;
 }
