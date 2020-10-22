@@ -43,7 +43,7 @@ void init_TLB(){
 	memset(tlb, 0, sizeof(tlb));
 }
 void set_TLB(uint32_t addr, PTE pte){	
-	int a;
+	int a;/*
 	for(a = 0; a < 64;a++){
 		if(!tlb[a].valid){
 			tlb[a].valid = 1;
@@ -51,7 +51,7 @@ void set_TLB(uint32_t addr, PTE pte){
 			tlb[a].pte.val = pte.val;
 			return;
 		}
-	}
+	}*/
 	srand((unsigned)time(NULL));
 	a = rand() % 64;
 	tlb[a].valid = 1;
