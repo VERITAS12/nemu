@@ -168,8 +168,8 @@ static int cmd_page(char *args){
 		bool flag;
 		addr = expr(arg, &flag);
 		if(!flag) {printf("Bad expression\n");return 0;}
-		flag = (cpu.CR0.protect_enable && cpu.CR0.paging);
-		if(!flag) {printf("Bad mode\n"); return 0;}
+		//flag = (cpu.CR0.protect_enable && cpu.CR0.paging);
+		//if(!flag) {printf("Bad mode\n"); return 0;}
 		pageaddr_t paddr;
 		paddr.val = addr;
 		//printf("get me\n");
