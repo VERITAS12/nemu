@@ -30,7 +30,7 @@ uint32_t check_TLB(uint32_t addr, bool* success){
 	int i;
 	uint32_t index = addr >> 12;
 	for(i = 0;i < 64;i++){
-		printf("%x, %x, %d\n", tlb[i].tag, tlb[i].valid, tlb[i].pte.present);
+		printf("%x, %x, %x, %d\n", index, tlb[i].tag, tlb[i].valid, tlb[i].pte.present);
 		if(tlb[i].tag == index && tlb[i].valid && tlb[i].pte.present){
 			return tlb[i].pte.page_frame;
 			*success = true;
