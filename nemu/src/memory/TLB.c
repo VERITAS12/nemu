@@ -42,6 +42,7 @@ void init_TLB(){
 }
 void set_TLB(uint32_t addr, PTE pte){
 	int i;
+	printf("set\n");
 	for(i = 0;i < 64;i++){
 		if(tlb[i].valid == 0){tlb[i].valid = 1;tlb[i].tag = addr;tlb[i].pte=pte;return;}
 	}
