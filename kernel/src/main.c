@@ -13,6 +13,7 @@ uint32_t loader();
 void video_mapping_write_test();
 void video_mapping_read_test();
 void video_mapping_clear();
+void create_video_mapping();
 
 void init_cond();
 
@@ -74,6 +75,7 @@ void init_cond() {
 	Log("Hello, NEMU world!");
 
 //#if defined(IA32_PAGE) && defined(HAS_DEVICE)
+	create_video_mapping();
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 //#endif
