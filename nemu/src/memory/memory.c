@@ -4,7 +4,6 @@
 uint32_t L1_read(hwaddr_t, size_t);
 void L1_write(hwaddr_t, size_t, uint32_t);
 PTE check_TLB(uint32_t, bool* );
-void init_TLB();
 void set_TLB(uint32_t , PTE);
 uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	if(cpu.CR0.protect_enable){
