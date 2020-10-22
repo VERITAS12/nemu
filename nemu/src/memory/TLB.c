@@ -48,6 +48,7 @@ void set_TLB(uint32_t addr, PTE pte){
 	a = rand() % 64;
 	tlb[a].valid = 1;
 	tlb[a].tag = addr>>12;
-	tlb[a].pte.page_frame=pte.page_frame;
-	tlb[a].pte.present = pte.present;
+	tlb[a].pte.val = pte.val;
+	//tlb[a].pte.page_frame=pte.page_frame;
+	//tlb[a].pte.present = pte.present;
 }
