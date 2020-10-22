@@ -46,7 +46,7 @@ void set_TLB(uint32_t addr, PTE pte){
 	int i;
 	for(i = 0;i < 64;i++){
 		if(tlb[i].valid == 0){
-			printf("set\n");
+			//printf("set\n");
 			tlb[i].valid = 1;
 			tlb[i].tag = addr>>12;
 			tlb[i].pte.page_frame=pte.page_frame;
