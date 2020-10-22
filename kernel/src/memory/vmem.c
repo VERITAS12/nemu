@@ -17,7 +17,7 @@ void create_video_mapping() {
 	PDE* pde = (PDE*)va_to_pa(get_updir());
 	pde[0].page_frame = (uint32_t)va_to_pa(my_pt2) >> 12;
 	pde[0].present = 1;
-	int i;
+	uint32_t i;
 	for(i = (VMEM_ADDR>>12); i < ((VMEM_ADDR + SCR_SIZE) >> 12) + 1; i += 1){
 		my_pt2[i].page_frame = i;
 		my_pt2[i].present = 1;
