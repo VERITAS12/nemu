@@ -3,7 +3,9 @@
 
 uint32_t L1_read(hwaddr_t, size_t);
 void L1_write(hwaddr_t, size_t, uint32_t);
-
+PTE check_TLB(uint32_t, bool* );
+void init_TLB();
+void set_TLB(uint32_t , PTE);
 uint32_t seg_translate(hwaddr_t addr, size_t len, uint8_t sreg){
 	if(cpu.CR0.protect_enable){
 		//printf("get me\n");
@@ -26,9 +28,13 @@ uint32_t page_translate(hwaddr_t addr){
 	//printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
 	
 	if(cpu.CR0.protect_enable && cpu.CR0.paging){
+		
 		pageaddr_t paddr;
 		paddr.val = addr;
 		//printf("get me\n");
+		bool flag = false;
+		PTE pte0 = check_TLB(addr, &flag);		
+		if(flag) return (pte0.page_frame << 12) + paddr.offset;
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
 		pte.val = hwaddr_read(base1, 4);
@@ -37,6 +43,7 @@ uint32_t page_translate(hwaddr_t addr){
 		PTE pte2;
 		pte2.val = hwaddr_read(base2, 4);
 		assert(pte2.present);
+		set_TLB(addr, pte2);
 		return (pte2.page_frame << 12) + paddr.offset;
 	}
 	return addr;

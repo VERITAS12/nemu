@@ -41,9 +41,7 @@ typedef struct GDC{
 	uint32_t base;
 	uint32_t limit;
 }GDC;
-typedef struct TLB{
-	uint32_t addr;
-}TLB;
+
 /* the segment register*/
 typedef union XS{
 	struct {
