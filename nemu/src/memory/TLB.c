@@ -43,15 +43,11 @@ void init_TLB(){
 	memset(tlb, 0, sizeof(tlb));
 }
 void set_TLB(uint32_t addr, PTE pte){
-	int i;
-	for(i = 0;i < 64;i++){
-		if(tlb[i].valid == 0){
-			//printf("set\n");
-			tlb[i].valid = 1;
-			tlb[i].tag = addr>>12;
-			tlb[i].pte.page_frame=pte.page_frame;
-			tlb[i].pte.present = pte.present;
-			return;
-		}
-	}
+	int a;
+	srand((unsigned)time(NULL));
+	a = rand() % 64;
+	tlb[a].valid = 1;
+	tlb[a].tag = addr>>12;
+	tlb[a].pte.page_frame=pte.page_frame;
+	tlb[a].pte.present = pte.present;
 }
