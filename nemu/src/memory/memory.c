@@ -43,7 +43,7 @@ uint32_t page_translate(hwaddr_t addr){
 		PTE pte2;
 		pte2.val = hwaddr_read(base2, 4);
 		assert(pte2.present);
-		set_TLB(pte2.page_frame, pte2);
+		set_TLB(addr, pte2);
 		return (pte2.page_frame << 12) + paddr.offset;
 	}
 	return addr;
