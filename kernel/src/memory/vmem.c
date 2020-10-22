@@ -18,10 +18,12 @@ void create_video_mapping() {
 	pde[0].page_frame = (uint32_t)va_to_pa(my_pt2) >> 12;
 	pde[0].present = 1;
 	uint32_t i;
+	set_bp();
 	for(i = (VMEM_ADDR>>12); i < ((VMEM_ADDR + SCR_SIZE) >> 12) + 1; i += 1){
 		my_pt2[i].page_frame = i;
 		my_pt2[i].present = 1;
 	}
+	set_bp();
 	//panic("please implement me");
 }
 
