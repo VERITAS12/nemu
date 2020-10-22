@@ -33,8 +33,8 @@ uint32_t page_translate(hwaddr_t addr){
 		//printf("get me\n");
 		bool flag = false;
 		uint32_t temp = check_TLB(addr, &flag);
-		if(flag);
-		else printf("no---------------------------------\n");		
+		//if(flag);
+		//else printf("no---------------------------------\n");		
 		if(flag) return (temp << 12) + paddr.offset;
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
