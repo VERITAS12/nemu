@@ -26,24 +26,29 @@ typedef struct TLB{
 	uint32_t valid : 1;
 }TLB;
 TLB tlb[64];
-PTE check_TLB(uint32_t addr, bool* success){
+uint32_t check_TLB(uint32_t addr, bool* success){
 	int i;
 	uint32_t index = addr >> 12;
 	for(i = 0;i < 64;i++){
 		if(tlb[i].tag == index && tlb[i].valid && tlb[i].pte.present){
-			return tlb[i].pte;
+			return tlb[i].pte.page_frame;
 			*success = true;
 		}
 	}
-	return tlb[0].pte;
+	return 0;
 }
 void init_TLB(){
 	memset(tlb, 0, sizeof(tlb));
 }
 void set_TLB(uint32_t addr, PTE pte){
 	int i;
-	
 	for(i = 0;i < 64;i++){
-		if(tlb[i].valid == 0){printf("set\n");tlb[i].valid = 1;tlb[i].tag = addr>>12;tlb[i].pte=pte;return;}
+		if(tlb[i].valid == 0){
+			printf("set\n");
+			tlb[i].valid = 1;
+			tlb[i].tag = addr>>12;
+			tlb[i].pte=pte;
+			return;
+		}
 	}
 }
