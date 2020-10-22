@@ -59,6 +59,7 @@ typedef struct {
 	XS SR[6];
 	GDC SR_cache[6];
 	GDTR GDTR;
+	//TLB tlb[64];
 } CPU_state;
 
 extern CPU_state cpu;

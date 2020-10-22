@@ -73,17 +73,16 @@ void init_cond() {
 	 * the serial port is available in NEMU.
 	 */
 	Log("Hello, NEMU world!");
-video_mapping_write_test();
-#if defined(IA32_PAGE) && defined(HAS_DEVICE)
+
+//#if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
-#endif
+//#endif
 
 	/* Load the program. */
 	uint32_t eip = loader();
-video_mapping_read_test();
-video_mapping_clear();	
-#if defined(IA32_PAGE) && defined(HAS_DEVICE)
+	
+//#if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
 	 */
@@ -91,7 +90,7 @@ video_mapping_clear();
 
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
-#endif
+//#endif
 
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
