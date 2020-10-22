@@ -23,7 +23,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	L1_write(addr, len, data);	
 }
-int aa = 0, bb = 0;
+//int aa = 0, bb = 0;
 uint32_t page_translate(hwaddr_t addr){
 	//printf("get me PE: 0x%x, P:0x%x \n", cpu.CR0.protect_enable, cpu.CR0.paging);
 	
@@ -34,9 +34,9 @@ uint32_t page_translate(hwaddr_t addr){
 		//printf("get me\n");
 		bool flag = false;
 		uint32_t temp = check_TLB(addr, &flag);
-		if(flag) aa++;
-		else bb++;
-		printf("%d, %d\n", aa, bb);		
+		//if(flag) aa++;
+		//else bb++;
+		//printf("%d, %d\n", aa, bb);		
 		if(flag) return (temp << 12) + paddr.offset;
 		uint32_t base1 = (cpu.CR3.page_directory_base << 12) + (paddr.dir << 2);
 		PTE pte;
