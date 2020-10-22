@@ -42,13 +42,20 @@ uint32_t check_TLB(uint32_t addr, bool* success){
 void init_TLB(){
 	memset(tlb, 0, sizeof(tlb));
 }
-void set_TLB(uint32_t addr, PTE pte){
+void set_TLB(uint32_t addr, PTE pte){	
 	int a;
+	for(a = 0; a < 64;a++){
+		if(!tlb[a].valid){
+			tlb[a].valid = 1;
+			tlb[a].tag = addr>>12;
+			tlb[a].pte.val = pte.val;
+			return;
+		}
+	}
 	srand((unsigned)time(NULL));
 	a = rand() % 64;
 	tlb[a].valid = 1;
 	tlb[a].tag = addr>>12;
 	tlb[a].pte.val = pte.val;
-	//tlb[a].pte.page_frame=pte.page_frame;
-	//tlb[a].pte.present = pte.present;
+	
 }
