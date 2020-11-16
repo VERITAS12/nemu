@@ -8,7 +8,8 @@
 #include "data-mov/pop.h"
 #include "data-mov/push.h"
 #include "data-mov/cmovcc.h"
-
+#include "data-mov/popa.h"
+#include "data-mov/pusha.h"
 
 #include "control-instr/call.h"
 #include "control-instr/je.h"
