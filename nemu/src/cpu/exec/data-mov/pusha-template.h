@@ -4,7 +4,7 @@
 
 make_helper(concat(pusha_, SUFFIX)){
 	if(DATA_BYTE == 2){
-		uint16_t temp = reg_l(R_ESP);
+		uint16_t temp = reg_w(R_ESP);
 		int i;
 		for(i = 0;i < 8 ;i++)
 			if(i == 4)reg_w(R_ESP) -= 4, swaddr_write (reg_w(R_ESP), 4, temp, R_SS);
