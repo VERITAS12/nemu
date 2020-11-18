@@ -1,0 +1,12 @@
+#include "cpu/exec/template-start.h"
+
+#define instr sete
+
+static void do_execute(){
+	if(cpu.ZF==1)OPERAND_W(op_src,1);
+	else OPERAND_W(op_src, 0);
+	print_asm(str(instr)" %s", op_src->str);
+}
+make_instr_helper(rm)
+
+#include "cpu/exec/template-end.h"
