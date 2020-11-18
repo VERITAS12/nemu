@@ -30,7 +30,7 @@ char * to_str(uint32_t begin, uint32_t len){
 	for(;i<len;i++){
 		str[i] = swaddr_read(begin+i, 1, R_SS);
 	}
-	str[len] = 0x00;
+	
 	return str;
 }
 make_helper(nemu_trap) {
