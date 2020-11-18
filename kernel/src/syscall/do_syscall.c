@@ -19,7 +19,6 @@ static void sys_write(TrapFrame *tf){
 	uint32_t len = tf->edx;
 	tf->eax = len;
 	if(tf->ebx == 1||tf->ebx == 2)asm volatile(".byte 0xd6" : : "a"(2), "c"(buf), "d"(len));
-	set_bp();
 }
 void do_syscall(TrapFrame *tf) {
 	switch(tf->eax) {
@@ -38,6 +37,7 @@ void do_syscall(TrapFrame *tf) {
 		case SYS_ioctl: sys_ioctl(tf); break;
 		/* TODO: Add more system calls. */
 		case SYS_write:sys_write(tf);break;
+		
 		default: panic("Unhandled system call: id = %d, eip = 0x%08x", tf->eax, tf->eip);
 	}
 }
