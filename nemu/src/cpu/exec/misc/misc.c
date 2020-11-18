@@ -13,10 +13,10 @@ make_helper(int3) {
 	return 1;
 }
 make_helper(Int) {
-	uint8_t bias = decode_i_b(eip + 1);
-	raise_intr(bias);
+	uint8_t len = decode_i_b(eip + 1);
+	raise_intr(op_src->val);
 	print_asm("int");
-	return 1;
+	return len + 1;
 }
 
 make_helper(lea) {
