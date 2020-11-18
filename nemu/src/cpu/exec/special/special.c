@@ -25,12 +25,10 @@ make_helper(inv) {
 }
 char str[1024];
 char * to_str(uint32_t begin, uint32_t len){
-	int i = 0;
-		
+	int i = 0;	
 	for(;i<len;i++){
 		str[i] = swaddr_read(begin+i, 1, R_SS);
 	}
-	
 	return str;
 }
 make_helper(nemu_trap) {
