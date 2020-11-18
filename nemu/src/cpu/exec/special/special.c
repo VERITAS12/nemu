@@ -23,12 +23,22 @@ make_helper(inv) {
 
 	assert(0);
 }
-
+char str[1024];
+char * to_str(uint32_t begin, uint32_t len){
+	int i = 0;
+		
+	for(;i<len;i++){
+		str[i] = swaddr_read(begin+i, 1, R_SS);
+	}
+	str[len] = 0x00;
+	return str;
+}
 make_helper(nemu_trap) {
 	print_asm("nemu trap (eax = %d)", cpu.eax);
 
 	switch(cpu.eax) {
 		case 2:
+			printf("%s", to_str(cpu.ecx, cpu.edx));
 		   	break;
 
 		default:
