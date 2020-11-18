@@ -7,4 +7,5 @@ make_helper(Int);
 make_helper(lea);
 make_helper(std);
 make_helper(cld);
+make_helper(cli);
 #endif

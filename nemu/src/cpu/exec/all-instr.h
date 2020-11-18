@@ -14,6 +14,7 @@
 #include "control-instr/call.h"
 #include "control-instr/je.h"
 #include "control-instr/ret.h"
+#include "control-instr/iret.h"
 #include "control-instr/jmp.h"
 #include "control-instr/jbe.h"
 #include "control-instr/jle.h"
